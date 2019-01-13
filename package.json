@@ -1,0 +1,38 @@
+{
+  "name": "bitcoin-forge",
+  "version": "0.1.0",
+  "description": "Bitcoin tx forge tools",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/improvein/bitcoin-forge.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "transaction",
+    "tx",
+    "address",
+    "segwit"
+  ],
+  "author": "Improve-in",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/improvein/bitcoin-forge/issues"
+  },
+  "homepage": "https://github.com/improvein/bitcoin-forge#readme",
+  "dependencies": {
+    "bitcoinjs-lib": "^4.0.2",
+    "bs58check": "^2.1.2",
+    "commander": "^2.19.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3"
+  }
+}
