@@ -24,25 +24,34 @@ program
       const inputTxhash = ios[iosReadCount];
       const inputOutputIndex = ios[iosReadCount + 1];
       const inputOutputPrivKey = ios[iosReadCount + 2];
-      inputs.push({
+      iosReadCount += 3; // move 3 positions at a time
+
+      const input = {
         txhash: inputTxhash,
         index: parseInt(inputOutputIndex, 10),
         privateKey: inputOutputPrivKey,
-      });
+      };
 
-      iosReadCount += 3; // move 3 positions at a time
+      // check if there is an additional field for the input amount
+      // (should be numeric only)
+      if (/^\d+$/.test(ios[iosReadCount])) {
+        input.amount = parseInt(ios[iosReadCount], 10);
+        iosReadCount += 1; // move 1 position for this field
+      }
+
+      inputs.push(input);
     }
 
     // read outputs
     for (let o = 0; o < outputsQ; o += 1) {
       const outputAddress = ios[iosReadCount];
       const outputAmount = ios[iosReadCount + 1];
+      iosReadCount += 2; // move 2 positions at a time
+
       outputs.push({
         address: outputAddress,
         amount: parseInt(outputAmount, 10),
       });
-
-      iosReadCount += 2; // move 2 positions at a time
     }
 
     const tx = txService.createTx(inputs, outputs);

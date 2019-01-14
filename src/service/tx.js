@@ -16,6 +16,7 @@ exports.setTestnet = (isTestnet) => {
  * @param {string} inputs[].txhash Hash/id of the previous transactions.
  * @param {int} inputs[].index Index of the output in the previous tx.
  * @param {string} inputs[].privateKey Private key to sign this input, in WIF.
+ * @param {int} inputs[].amount Amount of the UTXO. (at the moment, assumes SegWit)
  * @param {Object[]} outputs Outputs of the transactions, in order.
  * @param {string} outputs[].address Address of the output.
  * @param {string} outputs[].amount Amount of the output.
@@ -29,7 +30,7 @@ exports.createTx = (inputs, outputs) => {
   txb.setVersion(1);
 
   // add the inputs
-  console.log('Add the inputs.', inputs);
+  console.log('Add the inputs.');
   const inputKeyPairs = [];
   inputs.forEach((input) => {
     // check required properties
@@ -51,7 +52,7 @@ exports.createTx = (inputs, outputs) => {
   });
 
   // add the outputs
-  console.log('Add the outputs.', outputs);
+  console.log('Add the outputs.');
   outputs.forEach((output) => {
     // check required properties
     if (!Object.prototype.hasOwnProperty.call(output, 'address')) {
@@ -68,8 +69,29 @@ exports.createTx = (inputs, outputs) => {
   console.log('Sign the inputs.');
   for (let i = 0; i < inputKeyPairs.length; i += 1) {
     const keyPair = inputKeyPairs[i];
-    // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
-    txb.sign(i, keyPair);
+
+    let isSegWit = false;
+    // if the amount of the UTXO for this input is provided, assume SegWit
+    // @TODO: this has to be improved
+    if (Object.prototype.hasOwnProperty.call(inputs[i], 'amount')) {
+      isSegWit = true;
+    }
+
+    if (isSegWit) {
+      // P2SH-P2WPKH
+
+      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network });
+      // this is the P2SH-P2WPKH
+      const p2shSegwit = bitcoin.payments.p2sh({ redeem: p2wpkh, network });
+
+      // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
+      txb.sign(i, keyPair, p2shSegwit.redeem.output, null, inputs[i].amount);
+    } else {
+      // regular standard spending
+
+      // vin, keyPair
+      txb.sign(i, keyPair);
+    }
   }
 
   console.log('Build TX.');
