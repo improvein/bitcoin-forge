@@ -4,6 +4,8 @@
   "description": "Bitcoin tx forge tools",
   "main": "cli.js",
   "scripts": {
+    "startweb": "webpack-dev-server --open --mode development",
+    "buildweb": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,13 +28,27 @@
   "dependencies": {
     "bitcoinjs-lib": "^4.0.2",
     "bs58check": "^2.1.2",
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^1.0.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.12.3"
+    "eslint-plugin-react": "^7.12.3",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   }
 }
