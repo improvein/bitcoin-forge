@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Input from '../components/Input';
+import InputField from '../components/InputField';
 
 class CreateTxScreen extends Component {
   constructor() {
@@ -21,9 +20,8 @@ class CreateTxScreen extends Component {
       <div>
         <h1>Transaction forge</h1>
         <form id="tx-form">
-          <Input
-            text="Test"
-            label="test"
+          <InputField
+            label="Test"
             type="text"
             id="test"
             value={test}

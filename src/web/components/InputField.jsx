@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = ({
-  label, text, type, id, value, handleChange,
+const InputField = ({
+  label, type, id, value, handleChange,
 }) => (
   <div className="form-group">
-    <label htmlFor={label}>{text}</label>
+    <label htmlFor={id}>{label}</label>
     <input
       type={type}
       className="form-control"
@@ -17,16 +17,15 @@ const Input = ({
   </div>
 );
 
-Input.propTypes = {
+InputField.propTypes = {
   label: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
 };
-Input.defaultProps = {
+InputField.defaultProps = {
   value: '',
 };
 
-export default Input;
+export default InputField;

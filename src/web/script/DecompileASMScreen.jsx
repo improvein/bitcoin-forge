@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Input from '../components/Input';
+import InputField from '../components/InputField';
 import Button from '../components/Button';
+import ScriptService from '../../service/script';
 
 class DecompileASMScreen extends Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class DecompileASMScreen extends Component {
 
     this.state = {
       hexScript: '',
+      asmResult: '',
+      errorMessage: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,26 +23,47 @@ class DecompileASMScreen extends Component {
 
   buttonClick(event) {
     const { hexScript } = this.state;
-    console.log(`Decompiling: ${hexScript}`);
+    // decompile
+    try {
+      const asm = ScriptService.decompileScriptASM(hexScript);
+      this.setState({
+        asmResult: asm,
+        errorMessage: '',
+      });
+    } catch (err) {
+      console.error(err);
+      this.setState({
+        errorMessage: err.message,
+      });
+    }
   }
 
   render() {
-    const { hexScript } = this.state;
+    const { hexScript, asmResult, errorMessage } = this.state;
 
     return (
       <div>
-        <h1>Decompile ASM from hexa</h1>
+        <h1>Decompile ASM</h1>
+        <p>Decompile the hexadecimal version of the script into human readable ASM.</p>
         <form id="script-decompile-asm-form">
-          <Input
-            text="Hexadecimal script"
-            label="seo_title"
+          <InputField
+            label="Hexadecimal script"
             type="text"
             id="hex-script"
             value={hexScript}
             handleChange={this.handleChange}
           />
+          <p className="text-danger">{errorMessage}</p>
           <Button text="Submit" btnClass="primary" onClick={this.buttonClick} />
         </form>
+        <div className="card mt-3">
+          <div className="card-body">
+            <h5 className="card-title">Result (ASM)</h5>
+            <p className="card-text" id="asm-result">
+              {asmResult}
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
