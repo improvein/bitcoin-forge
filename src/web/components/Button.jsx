@@ -12,7 +12,17 @@ const Button = ({
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   id: PropTypes.string,
-  btnClass: PropTypes.string.isRequired,
+  btnClass: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark',
+    'link',
+  ]).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
