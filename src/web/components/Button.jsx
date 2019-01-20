@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({
-  text, id, btnClass, onClick,
+  text, id, btnClass, onClick, type,
 }) => (
-  <button type="button" className={`btn btn-${btnClass}`} id={id} onClick={onClick}>
+  <button type={type} className={`btn btn-${btnClass}`} id={id} onClick={onClick}>
     {text}
   </button>
 );
@@ -12,6 +12,7 @@ const Button = ({
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   id: PropTypes.string,
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
   btnClass: PropTypes.oneOf([
     'primary',
     'secondary',
@@ -28,6 +29,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   id: null,
+  type: 'button',
 };
 
 export default Button;
