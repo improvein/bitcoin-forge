@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
+import HexInputField from '../components/HexInputField';
+import B58InputField from '../components/B58InputField';
 
 class TxInputForm extends Component {
   constructor(props) {
@@ -13,10 +15,10 @@ class TxInputForm extends Component {
       privateKey: props.privateKey,
       amount: props.amount,
     };
-    this.onInputChange = this.onInputChange.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
   }
 
-  onInputChange(event) {
+  onFieldChange(event) {
     this.setState({ [event.target.id]: event.target.value });
   }
 
@@ -29,13 +31,12 @@ class TxInputForm extends Component {
       <div className="card mb-1">
         <div className="card-body">
           <h4 className="card-title">{`Input #${index}`}</h4>
-          <InputField
+          <HexInputField
             label="Prev TX Hash"
-            type="text"
             id="prevTxHash"
             horizontal
             value={prevTxHash}
-            handleChange={this.onInputChange}
+            handleChange={this.onFieldChange}
           />
           <InputField
             label="Prev TX UTXO index"
@@ -43,23 +44,22 @@ class TxInputForm extends Component {
             id="prevTxIndex"
             horizontal
             value={prevTxIndex}
-            handleChange={this.onInputChange}
+            handleChange={this.onFieldChange}
           />
-          <InputField
+          <B58InputField
             label="Private key"
-            type="text"
             id="privateKey"
             horizontal
             value={privateKey}
-            handleChange={this.onInputChange}
+            handleChange={this.onFieldChange}
           />
           <InputField
-            label="UTXO output"
+            label="UTXO amount"
             type="number"
             id="amount"
             horizontal
             value={amount}
-            handleChange={this.onInputChange}
+            handleChange={this.onFieldChange}
           />
         </div>
       </div>

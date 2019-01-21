@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
+import B58InputField from '../components/B58InputField';
 
 class TxOutputForm extends Component {
   constructor(props) {
@@ -25,16 +26,15 @@ class TxOutputForm extends Component {
       <div className="card mb-1">
         <div className="card-body">
           <h4 className="card-title">{`Output #${index}`}</h4>
-          <InputField
+          <B58InputField
             label="Address"
-            type="text"
             id="address"
             horizontal
             value={address}
             handleChange={this.onInputChange}
           />
           <InputField
-            label="UTXO output"
+            label="Amount"
             type="number"
             id="amount"
             horizontal

@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({
-  text, id, btnClass, onClick, type,
+  text, id, btnClass, onClick, type, ...otherProps
 }) => (
-  <button type={type} className={`btn btn-${btnClass}`} id={id} onClick={onClick}>
+  <button type={type} className={`btn btn-${btnClass}`} id={id} onClick={onClick} {...otherProps}>
     {text}
   </button>
 );
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
   id: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
   btnClass: PropTypes.oneOf([
     'primary',

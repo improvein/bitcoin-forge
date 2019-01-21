@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class HexInput extends Component {
+class B58Input extends Component {
   constructor(props) {
     super(props);
 
@@ -15,15 +15,15 @@ class HexInput extends Component {
   onInputChange(event) {
     const { value } = event.target;
     // validate if Hexa
-    if (/^[0-9a-fA-F]*$/g.test(value)) {
+    if (/^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]*$/g.test(value)) {
       this.setState({
-        value: value.toLowerCase(),
+        value,
       });
       // call the outside handler
       this.props.onChange(event);
     } else {
       this.setState({
-        errorMessage: 'The value is not hexadecimal',
+        errorMessage: 'The value is not base58',
       });
     }
   }
@@ -35,7 +35,7 @@ class HexInput extends Component {
     return (
       <div className="input-group">
         <div className="input-group-prepend">
-          <span className="input-group-text">0x</span>
+          <span className="input-group-text">b58</span>
         </div>
         <input
           type="text"
@@ -49,14 +49,14 @@ class HexInput extends Component {
   }
 }
 
-HexInput.propTypes = {
+B58Input.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
-HexInput.defaultProps = {
+B58Input.defaultProps = {
   value: '',
   onChange: () => {},
 };
 
-export default HexInput;
+export default B58Input;

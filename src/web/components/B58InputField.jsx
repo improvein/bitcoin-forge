@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import B58Input from './B58Input';
 
-const InputField = ({
-  label, type, id, value, handleChange, horizontal, ...otherProps
+const B58InputField = ({
+  label, id, value, handleChange, horizontal, ...otherProps
 }) => {
   const inputToRender = (
-    <input
-      type={type}
+    <B58Input
       className="form-control"
       id={id}
       value={value}
@@ -25,18 +25,17 @@ const InputField = ({
   );
 };
 
-InputField.propTypes = {
+B58InputField.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   horizontal: PropTypes.bool,
   handleChange: PropTypes.func,
 };
-InputField.defaultProps = {
+B58InputField.defaultProps = {
   value: '',
   horizontal: false,
   handleChange: () => {},
 };
 
-export default InputField;
+export default B58InputField;
