@@ -26,6 +26,9 @@
   },
   "homepage": "https://github.com/improvein/bitcoin-forge#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "bitcoinjs-lib": "^4.0.2",
     "bootstrap": "^4.2.1",
     "bs58check": "^2.1.2",

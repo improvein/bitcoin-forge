@@ -1,9 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import HomeScreen from './web/HomeScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
 import './web/scss/main.scss';
+
+// icons to be used
+library.add(faArrowRight);
 
 const App = () => (
   <Router>
