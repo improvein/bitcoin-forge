@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -33,6 +34,29 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(scss)$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader, // inject CSS to page
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS modules
+          },
+          {
+            loader: 'postcss-loader', // Run postcss actions
+            options: {
+              plugins() {
+                // postcss plugins, can be exported to postcss.config.js
+                return [require('autoprefixer')];
+              },
+            },
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -46,6 +70,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: 'src/web/index.html',
       filename: 'index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'bundle.css',
     }),
   ],
 };

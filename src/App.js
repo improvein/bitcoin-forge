@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import HomeScreen from './web/HomeScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
+import './web/scss/main.scss';
 
 const App = () => (
   <Router>
@@ -37,10 +38,12 @@ const App = () => (
           </ul>
         </div>
       </nav>
-      <main className="container">
-        <Route path="/" exact component={() => <HomeScreen />} />
-        <Route path="/tx/" component={() => <CreateTxScreen />} />
-        <Route path="/script/" component={() => <DecompileASMScreen />} />
+      <main className="flex-shrink-0" role="main">
+        <div className="container">
+          <Route path="/" exact component={() => <HomeScreen />} />
+          <Route path="/tx/" component={() => <CreateTxScreen />} />
+          <Route path="/script/" component={() => <DecompileASMScreen />} />
+        </div>
       </main>
     </div>
   </Router>
