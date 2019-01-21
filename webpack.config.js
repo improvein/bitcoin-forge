@@ -66,6 +66,7 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist',
+    writeToDisk: true,
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
