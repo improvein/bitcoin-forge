@@ -5,6 +5,8 @@ import { faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import HomeScreen from './web/HomeScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
+
+import 'bootstrap';
 import './web/scss/main.scss';
 
 // icons to be used
@@ -30,15 +32,41 @@ const App = () => (
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/tx/">
-                Transaction
-              </Link>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="transactions-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Transactions
+              </a>
+              <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
+                <Link className="dropdown-item" to="/tx/">
+                  Create a tx
+                </Link>
+              </div>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/script/">
-                Script
-              </Link>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="transactions-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Scripts
+              </a>
+              <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
+                <Link className="dropdown-item" to="/script/">
+                  Decompile ASM
+                </Link>
+              </div>
             </li>
           </ul>
         </div>
