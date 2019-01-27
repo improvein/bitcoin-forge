@@ -9,9 +9,9 @@ class TxOutputForm extends Component {
     super(props);
 
     this.state = {
-      index: props.index,
-      address: props.address,
-      amount: props.amount,
+      index: props.item.index,
+      address: props.item.address,
+      amount: props.item.amount,
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -56,14 +56,14 @@ class TxOutputForm extends Component {
 }
 
 TxOutputForm.propTypes = {
-  index: PropTypes.number.isRequired,
-  address: PropTypes.string,
-  amount: PropTypes.number,
+  item: PropTypes.shape({
+    index: PropTypes.number.isRequired,
+    address: PropTypes.string,
+    amount: PropTypes.number,
+  }).isRequired,
   onUpdate: PropTypes.func,
 };
 TxOutputForm.defaultProps = {
-  address: '',
-  amount: 0,
   onUpdate: () => {},
 };
 

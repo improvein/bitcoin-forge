@@ -10,11 +10,11 @@ class TxInputForm extends Component {
     super(props);
 
     this.state = {
-      index: props.index,
-      prevTxHash: props.prevTxHash,
-      prevTxIndex: props.prevTxIndex,
-      privateKey: props.privateKey,
-      amount: props.amount,
+      index: props.item.index,
+      prevTxHash: props.item.prevTxHash,
+      prevTxIndex: props.item.prevTxIndex,
+      privateKey: props.item.privateKey,
+      amount: props.item.amount,
     };
     this.onFieldChange = this.onFieldChange.bind(this);
   }
@@ -84,18 +84,16 @@ class TxInputForm extends Component {
 }
 
 TxInputForm.propTypes = {
-  index: PropTypes.number.isRequired,
-  prevTxHash: PropTypes.string,
-  prevTxIndex: PropTypes.number,
-  privateKey: PropTypes.string,
-  amount: PropTypes.number,
+  item: PropTypes.shape({
+    index: PropTypes.number.isRequired,
+    prevTxHash: PropTypes.string,
+    prevTxIndex: PropTypes.number,
+    privateKey: PropTypes.string,
+    amount: PropTypes.number,
+  }).isRequired,
   onUpdate: PropTypes.func,
 };
 TxInputForm.defaultProps = {
-  prevTxHash: '',
-  prevTxIndex: 0,
-  privateKey: '',
-  amount: 0,
   onUpdate: () => {},
 };
 

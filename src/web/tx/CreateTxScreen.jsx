@@ -46,7 +46,10 @@ class CreateTxScreen extends Component {
     // get the last index used
     let lastIndex = 0;
     if (inputs.length > 0) {
-      lastIndex = inputs.reduce((acc, currentValue) => (currentValue > acc.index ? currentValue : acc.index));
+      lastIndex = inputs.reduce(
+        (acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index),
+        inputs[0],
+      );
     }
 
     const txInput = new TxInput(lastIndex + 1);
@@ -69,12 +72,15 @@ class CreateTxScreen extends Component {
     });
   }
 
-  onAddOutput(event) {
+  onAddOutput() {
     const { outputs } = this.state;
     // get the last index used
     let lastIndex = 0;
     if (outputs.length > 0) {
-      lastIndex = outputs.reduce((acc, currentValue) => (currentValue > acc.index ? currentValue : acc.index));
+      lastIndex = outputs.reduce(
+        (acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index),
+        outputs[0],
+      );
     }
 
     const txOutput = new TxOutput(lastIndex + 1);
@@ -97,7 +103,7 @@ class CreateTxScreen extends Component {
     });
   }
 
-  submit(event) {
+  submit() {
     const { inputs, outputs } = this.state;
 
     try {
@@ -161,11 +167,11 @@ class CreateTxScreen extends Component {
               Inputs
             </h2>
             {inputs.map(input => (
-              <TxInputForm key={input.index} index={input.index} onUpdate={this.onUpdateInput} />
+              <TxInputForm key={input.index} item={input} onUpdate={this.onUpdateInput} />
             ))}
           </div>
           <div className="col-sm-auto d-flex align-items-center">
-            <FontAwesomeIcon icon="arrow-right"/>
+            <FontAwesomeIcon icon="arrow-right" />
           </div>
           <div className="col-sm">
             <h2>
@@ -180,11 +186,7 @@ class CreateTxScreen extends Component {
               Outputs
             </h2>
             {outputs.map(output => (
-              <TxOutputForm
-                key={output.index}
-                index={output.index}
-                onUpdate={this.onUpdateOutput}
-              />
+              <TxOutputForm key={output.index} item={output} onUpdate={this.onUpdateOutput} />
             ))}
             <div className="card bg-light mb-1">
               <div className="card-body">
@@ -218,13 +220,15 @@ class CreateTxScreen extends Component {
                   <dd className="col-sm-9">{`${tx.weight()} bytes`}</dd>
 
                   <dt className="col-sm-3">Miner fee</dt>
-                  <dd className="col-sm-9">{`${estimatedFee} sat (${Math.round(estimatedFee / tx.virtualSize())} sat/vbyte)`}</dd>
+                  <dd className="col-sm-9">
+                    {`${estimatedFee} sat (${Math.round(
+                      estimatedFee / tx.virtualSize(),
+                    )} sat/vbyte)`}
+                  </dd>
                 </dl>
                 <div className="form-group">
                   <label htmlFor="tx-hex">Hex</label>
-                  <textarea className="form-control" id="tx-hex" readOnly>
-                    {tx.toHex()}
-                  </textarea>
+                  <textarea className="form-control" id="tx-hex" readOnly value={tx.toHex()} />
                 </div>
               </div>
             )}
