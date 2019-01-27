@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
 import HexInputField from '../components/HexInputField';
 import B58InputField from '../components/B58InputField';
+import TxInput from './TxInput';
 
 class TxInputForm extends Component {
   constructor(props) {
@@ -19,7 +20,22 @@ class TxInputForm extends Component {
   }
 
   onFieldChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+    this.setState({ [event.target.id]: event.target.value }, () => {
+      // get the properties and generate a TxInput object
+      const {
+        index, prevTxHash, prevTxIndex, privateKey, amount,
+      } = this.state;
+      const txInput = new TxInput(
+        parseInt(index, 10),
+        prevTxHash,
+        parseInt(prevTxIndex, 10),
+        privateKey,
+        parseInt(amount, 10),
+      );
+      // fire the onUpdate event
+      const { onUpdate } = this.props;
+      onUpdate(txInput);
+    });
   }
 
   render() {
@@ -73,12 +89,14 @@ TxInputForm.propTypes = {
   prevTxIndex: PropTypes.number,
   privateKey: PropTypes.string,
   amount: PropTypes.number,
+  onUpdate: PropTypes.func,
 };
 TxInputForm.defaultProps = {
   prevTxHash: '',
   prevTxIndex: 0,
   privateKey: '',
   amount: 0,
+  onUpdate: () => {},
 };
 
 export default TxInputForm;

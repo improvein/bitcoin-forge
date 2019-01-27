@@ -27,8 +27,8 @@ program
       iosReadCount += 3; // move 3 positions at a time
 
       const input = {
-        txhash: inputTxhash,
-        index: parseInt(inputOutputIndex, 10),
+        prevTxHash: inputTxhash,
+        prevTxIndex: parseInt(inputOutputIndex, 10),
         privateKey: inputOutputPrivKey,
       };
 

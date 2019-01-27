@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
 import B58InputField from '../components/B58InputField';
+import TxOutput from './TxOutput';
 
 class TxOutputForm extends Component {
   constructor(props) {
@@ -16,7 +17,14 @@ class TxOutputForm extends Component {
   }
 
   onInputChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+    this.setState({ [event.target.id]: event.target.value }, () => {
+      // get the properties and generate a TxInput object
+      const { index, address, amount } = this.state;
+      const txOutput = new TxOutput(parseInt(index, 10), address, parseInt(amount, 10));
+      // fire the onUpdate event
+      const { onUpdate } = this.props;
+      onUpdate(txOutput);
+    });
   }
 
   render() {
@@ -51,10 +59,12 @@ TxOutputForm.propTypes = {
   index: PropTypes.number.isRequired,
   address: PropTypes.string,
   amount: PropTypes.number,
+  onUpdate: PropTypes.func,
 };
 TxOutputForm.defaultProps = {
   address: '',
   amount: 0,
+  onUpdate: () => {},
 };
 
 export default TxOutputForm;

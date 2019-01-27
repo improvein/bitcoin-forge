@@ -13,8 +13,8 @@ exports.setTestnet = (isTestnet) => {
 /**
  * Creates a raw Transaction
  * @param {Object[]} inputs Inputs of the transaction, in order.
- * @param {string} inputs[].txhash Hash/id of the previous transactions.
- * @param {int} inputs[].index Index of the output in the previous tx.
+ * @param {string} inputs[].prevTxHash Hash/id of the previous transactions.
+ * @param {int} inputs[].prevTxIndex Index of the output in the previous tx.
  * @param {string} inputs[].privateKey Private key to sign this input, in WIF.
  * @param {int} inputs[].amount Amount of the UTXO. (at the moment, assumes SegWit)
  * @param {Object[]} outputs Outputs of the transactions, in order.
@@ -26,7 +26,7 @@ exports.createTx = (inputs, outputs) => {
 
   const txb = new bitcoin.TransactionBuilder(network);
 
-  // @TODO: what is the version?
+  // Set the protocol version of the transaction
   txb.setVersion(1);
 
   // add the inputs
@@ -34,18 +34,18 @@ exports.createTx = (inputs, outputs) => {
   const inputKeyPairs = [];
   inputs.forEach((input) => {
     // check required properties
-    if (!Object.prototype.hasOwnProperty.call(input, 'txhash')) {
+    if (!Object.prototype.hasOwnProperty.call(input, 'prevTxHash')) {
       throw new Error('The Tx hash for the input was not found.');
     }
-    if (!Object.prototype.hasOwnProperty.call(input, 'index')) {
-      throw new Error('The Tx output index for the input was not found.');
+    if (!Object.prototype.hasOwnProperty.call(input, 'prevTxIndex')) {
+      throw new Error('The previous Tx output index for the input was not found.');
     }
     if (!Object.prototype.hasOwnProperty.call(input, 'privateKey')) {
-      throw new Error('The Tx output privateKey for the input was not found.');
+      throw new Error('The previous Tx output privateKey for the input was not found.');
     }
 
-    txb.addInput(input.txhash, input.index);
-
+    txb.addInput(input.prevTxHash, input.prevTxIndex);
+    
     // get the keypair
     const keyPair = bitcoin.ECPair.fromWIF(input.privateKey, network);
     inputKeyPairs.push(keyPair);

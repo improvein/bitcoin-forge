@@ -71,7 +71,7 @@ const App = () => (
           </ul>
         </div>
       </nav>
-      <main className="flex-shrink-0" role="main">
+      <main className="flex-shrink-0 pb-3" role="main">
         <div className="container">
           <Route path="/" exact component={() => <HomeScreen />} />
           <Route path="/tx/" component={() => <CreateTxScreen />} />
