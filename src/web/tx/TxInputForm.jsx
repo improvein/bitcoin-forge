@@ -51,6 +51,7 @@ class TxInputForm extends Component {
             label="Prev TX Hash"
             id="prevTxHash"
             horizontal
+            size="sm"
             value={prevTxHash}
             handleChange={this.onFieldChange}
           />
@@ -59,6 +60,7 @@ class TxInputForm extends Component {
             type="number"
             id="prevTxIndex"
             horizontal
+            size="sm"
             value={prevTxIndex}
             handleChange={this.onFieldChange}
           />
@@ -66,6 +68,7 @@ class TxInputForm extends Component {
             label="Private key"
             id="privateKey"
             horizontal
+            size="sm"
             value={privateKey}
             handleChange={this.onFieldChange}
           />
@@ -74,6 +77,7 @@ class TxInputForm extends Component {
             type="number"
             id="amount"
             horizontal
+            size="sm"
             value={amount}
             handleChange={this.onFieldChange}
           />

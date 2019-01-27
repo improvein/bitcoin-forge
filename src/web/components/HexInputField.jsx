@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import HexInput from './HexInput';
 
 const HexInputField = ({
-  label, id, value, handleChange, horizontal, ...otherProps
+  label, id, value, handleChange, horizontal, size, ...otherProps
 }) => {
   const inputToRender = (
     <HexInput
       className="form-control"
       id={id}
       value={value}
+      size={size}
       onChange={handleChange}
       {...otherProps}
     />
@@ -30,11 +31,13 @@ HexInputField.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   horizontal: PropTypes.bool,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   handleChange: PropTypes.func,
 };
 HexInputField.defaultProps = {
   value: '',
   horizontal: false,
+  size: 'md',
   handleChange: () => {},
 };
 

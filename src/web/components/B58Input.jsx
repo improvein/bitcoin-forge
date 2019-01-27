@@ -29,11 +29,11 @@ class B58Input extends Component {
   }
 
   render() {
-    const { id } = this.props;
+    const { id, size } = this.props;
     const { value, errorMessage } = this.state;
 
     return (
-      <div className="input-group">
+      <div className={`input-group input-group-${size}`}>
         <div className="input-group-prepend">
           <span className="input-group-text">b58</span>
         </div>
@@ -52,10 +52,12 @@ class B58Input extends Component {
 B58Input.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   onChange: PropTypes.func,
 };
 B58Input.defaultProps = {
   value: '',
+  size: 'md',
   onChange: () => {},
 };
 

@@ -29,11 +29,11 @@ class HexInput extends Component {
   }
 
   render() {
-    const { id } = this.props;
+    const { id, size } = this.props;
     const { value, errorMessage } = this.state;
 
     return (
-      <div className="input-group">
+      <div className={`input-group input-group-${size}`}>
         <div className="input-group-prepend">
           <span className="input-group-text">0x</span>
         </div>
@@ -52,10 +52,12 @@ class HexInput extends Component {
 HexInput.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   onChange: PropTypes.func,
 };
 HexInput.defaultProps = {
   value: '',
+  size: 'md',
   onChange: () => {},
 };
 

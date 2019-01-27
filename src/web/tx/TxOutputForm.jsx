@@ -38,6 +38,7 @@ class TxOutputForm extends Component {
             label="Address"
             id="address"
             horizontal
+            size="sm"
             value={address}
             handleChange={this.onInputChange}
           />
@@ -46,6 +47,7 @@ class TxOutputForm extends Component {
             type="number"
             id="amount"
             horizontal
+            size="sm"
             value={amount}
             handleChange={this.onInputChange}
           />

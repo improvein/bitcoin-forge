@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const InputField = ({
-  label, type, id, value, handleChange, horizontal, ...otherProps
+  label, type, id, value, handleChange, horizontal, size, ...otherProps
 }) => {
   const inputToRender = (
     <input
       type={type}
-      className="form-control"
+      className={`form-control form-control-${size}`}
       id={id}
       value={value}
       onChange={handleChange}
@@ -31,10 +31,12 @@ InputField.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   horizontal: PropTypes.bool,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   handleChange: PropTypes.func,
 };
 InputField.defaultProps = {
   value: '',
+  size: 'md',
   horizontal: false,
   handleChange: () => {},
 };
