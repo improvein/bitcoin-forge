@@ -2,6 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import HomeScreen from './web/HomeScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
@@ -10,7 +13,7 @@ import 'bootstrap';
 import './web/scss/main.scss';
 
 // icons to be used
-library.add(faArrowRight, faPlusCircle);
+library.add(faArrowRight, faGithub, faPlusCircle);
 
 const App = () => (
   <Router>
@@ -67,6 +70,17 @@ const App = () => (
                   Decompile ASM
                 </Link>
               </div>
+            </li>
+          </ul>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                href="https://github.com/improvein/bitcoin-forge"
+                title="GitHub repo"
+              >
+                <FontAwesomeIcon icon={['fab', 'github']} />
+              </a>
             </li>
           </ul>
         </div>
