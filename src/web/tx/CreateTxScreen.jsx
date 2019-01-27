@@ -164,8 +164,8 @@ class CreateTxScreen extends Component {
               <TxInputForm key={input.index} index={input.index} onUpdate={this.onUpdateInput} />
             ))}
           </div>
-          <div className="col-sm-auto">
-            <FontAwesomeIcon icon="arrow-right" className="align-middle" />
+          <div className="col-sm-auto d-flex align-items-center">
+            <FontAwesomeIcon icon="arrow-right"/>
           </div>
           <div className="col-sm">
             <h2>
@@ -216,6 +216,9 @@ class CreateTxScreen extends Component {
 
                   <dt className="col-sm-3">Weight</dt>
                   <dd className="col-sm-9">{`${tx.weight()} bytes`}</dd>
+
+                  <dt className="col-sm-3">Miner fee</dt>
+                  <dd className="col-sm-9">{`${estimatedFee} sat (${Math.round(estimatedFee / tx.virtualSize())} sat/vbyte)`}</dd>
                 </dl>
                 <div className="form-group">
                   <label htmlFor="tx-hex">Hex</label>
