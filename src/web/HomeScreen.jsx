@@ -5,7 +5,7 @@ class HomeScreen extends Component {
     return (
       <div>
         <h1>Welcome to Bitcoin Forge</h1>
-        <p>This is the forge with different tools to tinker with Bitcoin.</p>
+        <p>This is the forge with different tools to tinker with Bitcoin. It is meant to work offline.</p>
         <p>
           This web front-end is developed using
           {' '}
