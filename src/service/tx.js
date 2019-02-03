@@ -16,7 +16,8 @@ exports.setTestnet = (isTestnet) => {
  * @param {string} inputs[].prevTxHash Hash/id of the previous transactions.
  * @param {int} inputs[].prevTxIndex Index of the output in the previous tx.
  * @param {string} inputs[].privateKey Private key to sign this input, in WIF.
- * @param {int} inputs[].amount Amount of the UTXO. (at the moment, assumes SegWit)
+ * @param {int} inputs[].amount Amount of the UTXO.
+ * @param {boolean} inputs[].isSegWit Indicates wether the UTXO is segwit
  * @param {Object[]} outputs Outputs of the transactions, in order.
  * @param {string} outputs[].address Address of the output.
  * @param {string} outputs[].amount Amount of the output.
@@ -67,25 +68,18 @@ exports.createTx = (inputs, outputs) => {
 
   // now sign the inputs
   console.log('Sign the inputs.');
-  for (let i = 0; i < inputKeyPairs.length; i += 1) {
-    const keyPair = inputKeyPairs[i];
+  for (let i = 0; i < inputs.length; i += 1) {
+    const input = inputs[i];
+    const keyPair = bitcoin.ECPair.fromWIF(input.privateKey, network);
 
-    let isSegWit = false;
-    // if the amount of the UTXO for this input is provided, assume SegWit
-    // @TODO: this has to be improved
-    if (Object.prototype.hasOwnProperty.call(inputs[i], 'amount')) {
-      isSegWit = true;
-    }
-
-    if (isSegWit) {
+    if (input.isSegWit) {
       // P2SH-P2WPKH
-
       const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network });
       // this is the P2SH-P2WPKH
       const p2shSegwit = bitcoin.payments.p2sh({ redeem: p2wpkh, network });
 
       // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
-      txb.sign(i, keyPair, p2shSegwit.redeem.output, null, inputs[i].amount);
+      txb.sign(i, keyPair, p2shSegwit.redeem.output, null, input.amount);
     } else {
       // regular standard spending
 
