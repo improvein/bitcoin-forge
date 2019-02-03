@@ -6,6 +6,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import HomeScreen from './web/HomeScreen';
+import DecodeTxScreen from './web/tx/DecodeTxScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
 
@@ -48,7 +49,10 @@ const App = () => (
                 Transactions
               </a>
               <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
-                <Link className="dropdown-item" to="/tx/">
+                <Link className="dropdown-item" to="/tx/decode">
+                  Decode a tx
+                </Link>
+                <Link className="dropdown-item" to="/tx/forge">
                   Create a tx
                 </Link>
               </div>
@@ -88,7 +92,8 @@ const App = () => (
       <main className="flex-shrink-0 pb-3" role="main">
         <div className="container">
           <Route path="/" exact component={() => <HomeScreen />} />
-          <Route path="/tx/" component={() => <CreateTxScreen />} />
+          <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
+          <Route path="/tx/forge" component={() => <CreateTxScreen />} />
           <Route path="/script/" component={() => <DecompileASMScreen />} />
         </div>
       </main>

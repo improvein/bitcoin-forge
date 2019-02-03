@@ -14,6 +14,16 @@ const TxService = {
   },
 
   /**
+   * Decodes a Transaction from it's hexadecimal format
+   * @param {string} txHexa Hexadecimal notation of the transaction
+   * @return {Object} Transaction object
+   */
+  decodeTx: (txHexa) => {
+    const tx = bitcoin.Transaction.fromHex(txHexa);
+    return tx;
+  },
+
+  /**
    * Creates a raw Transaction
    * @param {Object[]} inputs Inputs of the transaction, in order.
    * @param {string} inputs[].prevTxHash Hash/id of the previous transactions.
