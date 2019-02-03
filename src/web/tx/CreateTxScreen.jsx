@@ -215,7 +215,7 @@ class CreateTxScreen extends Component {
             </div>
           </div>
           <div className="col-sm-12">
-            <Button text="Submit" btnClass="primary" onClick={this.submit} />
+            <Button text="Forge transaction" btnClass="primary" onClick={this.submit} />
           </div>
         </form>
         <div className="card mt-3">
