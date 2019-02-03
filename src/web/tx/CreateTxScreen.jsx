@@ -6,9 +6,7 @@ import txService from '../../service/tx';
 import Button from '../components/Button';
 import TxInputForm from './TxInputForm';
 import TxOutputForm from './TxOutputForm';
-import TxInput from './TxInput';
-import TxOutput from './TxOutput';
-import ButtonRadio from '../components/ButtonRadio';
+import { TxInput, TxOutput } from '../../model';
 
 class CreateTxScreen extends Component {
   constructor() {
@@ -133,8 +131,6 @@ class CreateTxScreen extends Component {
       estimatedFee -= output.amount;
     });
 
-    const currentNetwork = isTestnet ? 'testnet' : 'mainnet';
-
     return (
       <div>
         <h1>Create Transaction</h1>
@@ -175,7 +171,7 @@ class CreateTxScreen extends Component {
               </div>
             </div>
           </div>
-          <div className="col-6"></div>
+          <div className="col-6" />
           <div className="col-sm">
             <h2>
               <div className="float-right">

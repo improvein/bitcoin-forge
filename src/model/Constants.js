@@ -1,0 +1,15 @@
+export const ADDRTYPE_P2PKH = 'P2PKH';
+export const ADDRTYPE_P2SH = 'P2SH';
+export const ADDRTYPE_P2SH_P2WPKH = 'P2SH-P2WPKH';
+export const ADDRTYPE_P2SH_P2WSH = 'P2SH-P2WSH';
+export const ADDRTYPE_P2WPKH = 'P2WPKH';
+export const ADDRTYPE_P2WSH = 'P2WSH';
+
+export const AddressTypes = [
+  ADDRTYPE_P2PKH,
+  ADDRTYPE_P2SH,
+  ADDRTYPE_P2SH_P2WPKH,
+  ADDRTYPE_P2SH_P2WSH,
+  ADDRTYPE_P2WPKH,
+  ADDRTYPE_P2WSH,
+];

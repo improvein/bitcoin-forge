@@ -7,4 +7,6 @@ export { default as ButtonRadio } from './ButtonRadio';
 export { default as HexInput } from './HexInput';
 export { default as HexInputField } from './HexInputField';
 export { default as InputField } from './InputField';
+export { default as SelectInput } from './SelectInput';
+export { default as SelectInputField } from './SelectInputField';
 export { default as SwitchField } from './SwitchField';

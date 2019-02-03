@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { AmountInputField, B58InputField, InputField } from '../components';
-import TxOutput from './TxOutput';
+import { AmountInputField, B58InputField } from '../components';
+import { TxOutput } from '../../model';
 
 class TxOutputForm extends Component {
   constructor(props) {

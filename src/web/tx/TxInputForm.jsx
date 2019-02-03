@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
-import { AmountInputField, HexInputField, B58InputField, SwitchField } from '../components';
-import TxInput from './TxInput';
+import {
+  AmountInputField, HexInputField, B58InputField, SelectInputField,
+} from '../components';
+import { TxInput } from '../../model';
+import * as Constants from '../../model/Constants';
 
 class TxInputForm extends Component {
   constructor(props) {
@@ -14,7 +17,7 @@ class TxInputForm extends Component {
       prevTxIndex: props.item.prevTxIndex,
       privateKey: props.item.privateKey,
       amount: props.item.amount,
-      isSegWit: props.item.isSegWit,
+      type: props.item.type,
     };
     this.onFieldChange = this.onFieldChange.bind(this);
   }
@@ -30,7 +33,7 @@ class TxInputForm extends Component {
     this.setState({ [event.target.id]: fieldValue }, () => {
       // get the properties and generate a TxInput object
       const {
-        index, prevTxHash, prevTxIndex, privateKey, amount, isSegWit,
+        index, prevTxHash, prevTxIndex, privateKey, amount, type,
       } = this.state;
       const txInput = new TxInput(
         parseInt(index, 10),
@@ -38,7 +41,7 @@ class TxInputForm extends Component {
         parseInt(prevTxIndex, 10),
         privateKey,
         parseInt(amount, 10),
-        isSegWit,
+        type,
       );
       // fire the onUpdate event
       const { onUpdate } = this.props;
@@ -48,7 +51,7 @@ class TxInputForm extends Component {
 
   render() {
     const {
-      index, prevTxHash, prevTxIndex, privateKey, amount, isSegWit,
+      index, prevTxHash, prevTxIndex, privateKey, amount, type,
     } = this.state;
 
     return (
@@ -56,7 +59,7 @@ class TxInputForm extends Component {
         <div className="card-header">{`Input #${index}`}</div>
         <div className="card-body">
           <div>
-            <h4 className="card-title">UTXO</h4>
+            <h4 className="card-title">Previous UTXO</h4>
             <HexInputField
               label="TX Hash"
               id="prevTxHash"
@@ -75,10 +78,16 @@ class TxInputForm extends Component {
               value={prevTxIndex}
               handleChange={this.onFieldChange}
             />
-            <SwitchField
-              label="Is Segwit"
-              id="isSegWit"
-              value={isSegWit}
+            <SelectInputField
+              label="Type"
+              id="type"
+              size="sm"
+              horizontal
+              value={type}
+              choices={Constants.AddressTypes.map(addrType => ({
+                text: addrType,
+                value: addrType,
+              }))}
               handleChange={this.onFieldChange}
             />
             <AmountInputField
@@ -112,7 +121,7 @@ TxInputForm.propTypes = {
     prevTxIndex: PropTypes.number,
     privateKey: PropTypes.string,
     amount: PropTypes.number,
-    isSegWit: PropTypes.bool,
+    type: PropTypes.oneOf(Constants.AddressTypes),
   }).isRequired,
   onUpdate: PropTypes.func,
 };
