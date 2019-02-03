@@ -1,3 +1,5 @@
+export { default as AmountInput } from './AmountInput';
+export { default as AmountInputField } from './AmountInputField';
 export { default as B58Input } from './B58Input';
 export { default as B58InputField } from './B58InputField';
 export { default as Button } from './Button';

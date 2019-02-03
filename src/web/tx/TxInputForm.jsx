@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
-import { HexInputField, B58InputField, SwitchField } from '../components';
+import { AmountInputField, HexInputField, B58InputField, SwitchField } from '../components';
 import TxInput from './TxInput';
 
 class TxInputForm extends Component {
@@ -23,6 +23,8 @@ class TxInputForm extends Component {
     let fieldValue = event.target.value;
     if (event.target.type === 'checkbox') {
       fieldValue = event.target.checked;
+    } else if (event.target.type === 'number') {
+      fieldValue = parseInt(fieldValue, 10);
     }
 
     this.setState({ [event.target.id]: fieldValue }, () => {
@@ -51,46 +53,50 @@ class TxInputForm extends Component {
 
     return (
       <div className="card mb-1">
+        <div className="card-header">{`Input #${index}`}</div>
         <div className="card-body">
-          <h4 className="card-title">{`Input #${index}`}</h4>
-          <HexInputField
-            label="Prev TX Hash"
-            id="prevTxHash"
-            horizontal
-            size="sm"
-            value={prevTxHash}
-            handleChange={this.onFieldChange}
-          />
-          <InputField
-            label="Prev TX UTXO index"
-            type="number"
-            id="prevTxIndex"
-            horizontal
-            size="sm"
-            value={prevTxIndex}
-            handleChange={this.onFieldChange}
-          />
-          <SwitchField
-            label="Is Segwit"
-            id="isSegWit"
-            value={isSegWit}
-            handleChange={this.onFieldChange}
-          />
+          <div>
+            <h4 className="card-title">UTXO</h4>
+            <HexInputField
+              label="TX Hash"
+              id="prevTxHash"
+              horizontal
+              size="sm"
+              value={prevTxHash}
+              handleChange={this.onFieldChange}
+            />
+            <InputField
+              label="Index"
+              type="number"
+              pattern="[0-9]*"
+              id="prevTxIndex"
+              horizontal
+              size="sm"
+              value={prevTxIndex}
+              handleChange={this.onFieldChange}
+            />
+            <SwitchField
+              label="Is Segwit"
+              id="isSegWit"
+              value={isSegWit}
+              handleChange={this.onFieldChange}
+            />
+            <AmountInputField
+              label="Amount"
+              id="amount"
+              horizontal
+              size="sm"
+              value={amount}
+              handleChange={this.onFieldChange}
+            />
+          </div>
+          <hr />
           <B58InputField
             label="Private key"
             id="privateKey"
             horizontal
             size="sm"
             value={privateKey}
-            handleChange={this.onFieldChange}
-          />
-          <InputField
-            label="UTXO amount"
-            type="number"
-            id="amount"
-            horizontal
-            size="sm"
-            value={amount}
             handleChange={this.onFieldChange}
           />
         </div>

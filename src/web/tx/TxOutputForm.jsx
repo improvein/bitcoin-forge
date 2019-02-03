@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import InputField from '../components/InputField';
-import B58InputField from '../components/B58InputField';
+import { AmountInputField, B58InputField, InputField } from '../components';
 import TxOutput from './TxOutput';
 
 class TxOutputForm extends Component {
@@ -17,7 +16,14 @@ class TxOutputForm extends Component {
   }
 
   onInputChange(event) {
-    this.setState({ [event.target.id]: event.target.value }, () => {
+    let fieldValue = event.target.value;
+    if (event.target.type === 'checkbox') {
+      fieldValue = event.target.checked;
+    } else if (event.target.type === 'number') {
+      fieldValue = parseInt(fieldValue, 10);
+    }
+
+    this.setState({ [event.target.id]: fieldValue }, () => {
       // get the properties and generate a TxInput object
       const { index, address, amount } = this.state;
       const txOutput = new TxOutput(parseInt(index, 10), address, parseInt(amount, 10));
@@ -32,8 +38,8 @@ class TxOutputForm extends Component {
 
     return (
       <div className="card mb-1">
+        <div className="card-header">{`Output #${index}`}</div>
         <div className="card-body">
-          <h4 className="card-title">{`Output #${index}`}</h4>
           <B58InputField
             label="Address"
             id="address"
@@ -42,9 +48,8 @@ class TxOutputForm extends Component {
             value={address}
             handleChange={this.onInputChange}
           />
-          <InputField
+          <AmountInputField
             label="Amount"
-            type="number"
             id="amount"
             horizontal
             size="sm"

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class HexInput extends Component {
+class AmountInput extends Component {
   constructor(props) {
     super(props);
 
@@ -14,51 +14,54 @@ class HexInput extends Component {
 
   onInputChange(event) {
     const { value } = event.target;
-    // validate if Hexa
-    if (/^[0-9a-fA-F]*$/g.test(value)) {
+    // validate if numeric
+    if (/^[0-9]*$/g.test(value)) {
       this.setState({
-        value: value.toLowerCase(),
+        value: parseInt(value, 10),
       });
       // call the outside handler
       this.props.onChange(event);
     } else {
       this.setState({
-        errorMessage: 'The value is not hexadecimal',
+        errorMessage: 'The value is not numerical',
       });
     }
   }
 
   render() {
-    const { id, size } = this.props;
+    const { id, size, unit } = this.props;
     const { value, errorMessage } = this.state;
 
     return (
       <div className={`input-group input-group-${size}`}>
-        <div className="input-group-prepend" title="Hexadecimal">
-          <span className="input-group-text">0x</span>
-        </div>
         <input
-          type="text"
+          type="number"
           className={`form-control ${errorMessage !== '' ? 'has-error' : ''}`}
           id={id}
           value={value}
+          pattern="[0-9]*"
           onChange={this.onInputChange}
         />
+        <div className="input-group-append">
+          <span className="input-group-text">{unit}</span>
+        </div>
       </div>
     );
   }
 }
 
-HexInput.propTypes = {
+AmountInput.propTypes = {
   id: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.number,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  unit: PropTypes.string,
   onChange: PropTypes.func,
 };
-HexInput.defaultProps = {
+AmountInput.defaultProps = {
   value: '',
   size: 'md',
+  unit: 'sat',
   onChange: () => {},
 };
 
-export default HexInput;
+export default AmountInput;
