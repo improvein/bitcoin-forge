@@ -12,15 +12,21 @@ class ButtonRadio extends Component {
     };
 
     this.onInputChange = this.onInputChange.bind(this);
+    this.onInputClick = this.onInputClick.bind(this);
   }
 
   onInputChange(event) {
     console.log('CHANGE!');
   }
 
+  onInputClick(event) {
+    console.log('CLICK!');
+  }
+
   render() {
     const { id, onChange } = this.props;
     const { value, btnClass, choices } = this.state;
+    const { onInputChange } = this;
 
     return (
       <div className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -35,7 +41,7 @@ class ButtonRadio extends Component {
               id={`${id}_${index}`}
               name={id}
               value={choice.value}
-              onChange={this.onInputChange}
+              onChange={onInputChange}
               autoComplete="off"
               checked={choice.value === value}
             />

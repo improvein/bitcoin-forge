@@ -133,10 +133,6 @@ class CreateTxScreen extends Component {
       estimatedFee -= output.amount;
     });
 
-    const networkChoices = [
-      { text: 'Mainnet', value: 'mainnet' },
-      { text: 'Testnet', value: 'testnet' },
-    ];
     const currentNetwork = isTestnet ? 'testnet' : 'mainnet';
 
     return (
@@ -145,14 +141,39 @@ class CreateTxScreen extends Component {
         <p>Create (forge) a transaction.</p>
         <form id="tx-form" className="row">
           <div className="col-12">
-            <label className="mr-2">Network</label>
-            <ButtonRadio
-              id="network"
-              btnClass="light"
-              value={currentNetwork}
-              choices={networkChoices}
-              onChange={this.onNetworkChange}
-            />
+            <div className="form-group row">
+              <label className="col-sm-3 col-form-label">Network</label>
+              <div className="col-sm-9">
+                <div className="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="network-testnet"
+                    name="network"
+                    className="custom-control-input"
+                    value="testnet"
+                    checked={isTestnet}
+                    onChange={this.onNetworkChange}
+                  />
+                  <label className="custom-control-label" htmlFor="network-testnet">
+                    Testnet
+                  </label>
+                </div>
+                <div className="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="network-mainnet"
+                    name="network"
+                    className="custom-control-input"
+                    value="mainnet"
+                    checked={!isTestnet}
+                    onChange={this.onNetworkChange}
+                  />
+                  <label className="custom-control-label" htmlFor="network-mainnet">
+                    Mainnet
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-sm">
             <h2>
