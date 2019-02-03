@@ -140,7 +140,7 @@ class CreateTxScreen extends Component {
         <h1>Create Transaction</h1>
         <p>Create (forge) a transaction.</p>
         <form id="tx-form" className="row">
-          <div className="col-12">
+          <div className="col-6">
             <div className="form-group row">
               <label className="col-sm-3 col-form-label">Network</label>
               <div className="col-sm-9">
@@ -175,6 +175,7 @@ class CreateTxScreen extends Component {
               </div>
             </div>
           </div>
+          <div className="col-6"></div>
           <div className="col-sm">
             <h2>
               <div className="float-right">
