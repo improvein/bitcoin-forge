@@ -7,7 +7,7 @@ The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github
 The front-end is developed mainly using [React](https://reactjs.org), [Bootstrap](https://getbootstrap.com) and [other libraries](https://github.com/improvein/bitcoin-forge/blob/master/package.json)
 
 ## Online version
-You can use the already compiled version at XXXXXX
+You can use the already compiled version at https://improvein.github.io/bitcoin-forge/
 
 ## Local version
 The project should run locally without internet connection. That is why you can run the local version with the files under the [dist](https://github.com/improvein/bitcoin-forge/tree/master/dist) folder
