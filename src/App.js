@@ -17,7 +17,7 @@ import './web/scss/main.scss';
 library.add(faArrowRight, faGithub, faPlusCircle);
 
 const App = () => (
-  <Router>
+  <Router basename="/bitcoin-forge">
     <div>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <Link className="navbar-brand" to="/">
