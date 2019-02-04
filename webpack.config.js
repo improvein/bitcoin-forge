@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/bitcoin-forge',
+    publicPath: '/bitcoin-forge/',
     filename: '[name].[contenthash:8].js',
   },
   optimization: {
@@ -65,7 +65,9 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.resolve(__dirname, 'dist'),
+    publicPath: '/bitcoin-forge/',
+    openPage: 'bitcoin-forge/',
     writeToDisk: true,
     historyApiFallback: true,
   },
