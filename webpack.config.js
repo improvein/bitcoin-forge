@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: '/bitcoin-forge',
     filename: '[name].[contenthash:8].js',
   },
   optimization: {
