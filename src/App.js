@@ -9,6 +9,7 @@ import HomeScreen from './web/HomeScreen';
 import DecodeTxScreen from './web/tx/DecodeTxScreen';
 import CreateTxScreen from './web/tx/CreateTxScreen';
 import DecompileASMScreen from './web/script/DecompileASMScreen';
+import CreateAddressScreen from './web/address/CreateAddressScreen';
 
 import 'bootstrap';
 import './web/scss/main.scss';
@@ -61,7 +62,25 @@ const App = () => (
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
-                id="transactions-dropdown"
+                id="address-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Address
+              </a>
+              <div className="dropdown-menu" aria-labelledby="address-dropdown">
+                <Link className="dropdown-item" to="/address/create">
+                  Create
+                </Link>
+              </div>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="scripts-dropdown"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -69,7 +88,7 @@ const App = () => (
               >
                 Scripts
               </a>
-              <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
+              <div className="dropdown-menu" aria-labelledby="scripts-dropdown">
                 <Link className="dropdown-item" to="/script/decompile-asm">
                   Decompile ASM
                 </Link>
@@ -95,6 +114,7 @@ const App = () => (
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
           <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
+          <Route path="/address/create" component={() => <CreateAddressScreen />} />
         </div>
       </main>
     </div>
