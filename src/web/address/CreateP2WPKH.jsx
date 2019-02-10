@@ -16,7 +16,7 @@ class CreateP2WPKH extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.onNetworkChange = this.onNetworkChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    
+
     // Init
     addressService.setTestnet(true);
   }

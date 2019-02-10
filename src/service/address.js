@@ -70,6 +70,7 @@ const AddressService = {
 
     const { address } = bitcoin.payments.p2sh({
       redeem: bitcoin.payments.p2ms({ m: requiredSigs, pubkeys, network }),
+      network,
     });
     return address;
   },
@@ -84,7 +85,7 @@ const AddressService = {
     const pubkeys = publicKeys.map(hex => Buffer.from(hex, 'hex'));
 
     const { address } = bitcoin.payments.p2wsh({
-      redeem: bitcoin.payments.p2ms({ m: requiredSigs, pubkeys }),
+      redeem: bitcoin.payments.p2ms({ m: requiredSigs, pubkeys, network }),
       network,
     });
     return address;

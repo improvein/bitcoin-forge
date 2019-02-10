@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import CreateP2PKH from './CreateP2PKH';
 import CreateP2WPKH from './CreateP2WPKH';
 import CreateP2SHP2WPKH from './CreateP2SHP2WPKH';
+import CreateMultisigP2SH from './CreateMultisigP2SH';
+import CreateMultisigP2WSH from './CreateMultisigP2WSH';
+import CreateMultisigP2SHP2WSH from './CreateMultisigP2SHP2WSH';
 
 class CreateAddressScreen extends Component {
   constructor() {
@@ -111,14 +114,17 @@ class CreateAddressScreen extends Component {
               <div className="tab-pane fade" id="addr-multisig-p2sh" role="tabpanel">
                 <h2>Multisig P2SH</h2>
                 <p>Payment to Multi Signature using P2SH</p>
+                <CreateMultisigP2SH />
               </div>
               <div className="tab-pane fade" id="addr-multisig-p2wsh" role="tabpanel">
                 <h2>Multisig P2WSH (SegWit)</h2>
                 <p>Payment to Multi Signature using P2WSH (Payment to Witness Script Hash)</p>
+                <CreateMultisigP2WSH />
               </div>
               <div className="tab-pane fade" id="addr-multisig-p2sh-p2wsh" role="tabpanel">
                 <h2>Multisig P2SH-P2WSH (SegWit)</h2>
                 <p>Payment to Multi Signature using P2WSH, wrapped in P2SH</p>
+                <CreateMultisigP2SHP2WSH />
               </div>
             </div>
           </div>

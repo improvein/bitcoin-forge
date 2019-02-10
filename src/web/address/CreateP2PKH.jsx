@@ -16,7 +16,7 @@ class CreateP2PKH extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.onNetworkChange = this.onNetworkChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    
+
     // Init
     addressService.setTestnet(true);
   }
@@ -28,11 +28,6 @@ class CreateP2PKH extends Component {
 
   onInputChange(event) {
     let fieldValue = event.target.value;
-    if (event.target.type === 'checkbox') {
-      fieldValue = event.target.checked;
-    } else if (event.target.type === 'number') {
-      fieldValue = parseInt(fieldValue, 10);
-    }
 
     // update state property
     this.setState({ [event.target.id]: fieldValue });
