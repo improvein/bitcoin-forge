@@ -5,14 +5,14 @@ import { faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import HomeScreen from './web/HomeScreen';
-import DecodeTxScreen from './web/tx/DecodeTxScreen';
-import CreateTxScreen from './web/tx/CreateTxScreen';
-import DecompileASMScreen from './web/script/DecompileASMScreen';
-import CreateAddressScreen from './web/address/CreateAddressScreen';
+import HomeScreen from './HomeScreen';
+import DecodeTxScreen from './tx/DecodeTxScreen';
+import CreateTxScreen from './tx/CreateTxScreen';
+import DecompileASMScreen from './script/DecompileASMScreen';
+import CreateAddressScreen from './address/CreateAddressScreen';
 
 import 'bootstrap';
-import './web/scss/main.scss';
+import './scss/main.scss';
 
 // icons to be used
 library.add(faArrowRight, faGithub, faPlusCircle);
