@@ -39,7 +39,7 @@ class HexInput extends Component {
         </div>
         <input
           type="text"
-          className={`form-control ${errorMessage !== '' ? 'has-error' : ''}`}
+          className={`text-console form-control ${errorMessage !== '' ? 'has-error' : ''}`}
           id={id}
           value={value}
           onChange={this.onInputChange}

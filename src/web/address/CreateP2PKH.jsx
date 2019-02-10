@@ -68,7 +68,7 @@ class CreateP2PKH extends Component {
         <p className="text-danger">{errorMessage}</p>
         <div className="form-group">
           <label>Address</label>
-          <p className="form-control-plaintext">{address}</p>
+          <p className="text-console form-control-plaintext">{address}</p>
         </div>
       </div>
     );
