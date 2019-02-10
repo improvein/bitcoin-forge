@@ -1,4 +1,5 @@
 import * as Constants from '../model/Constants';
+import { TxInput } from '../model';
 
 const bitcoin = require('bitcoinjs-lib');
 
@@ -25,15 +26,8 @@ const TxService = {
 
   /**
    * Creates a raw Transaction
-   * @param {Object[]} inputs Inputs of the transaction, in order.
-   * @param {string} inputs[].prevTxHash Hash/id of the previous transactions.
-   * @param {int} inputs[].prevTxIndex Index of the output in the previous tx.
-   * @param {string} inputs[].privateKey Private key to sign this input, in WIF.
-   * @param {int} inputs[].amount Amount of the UTXO.
-   * @param {boolean} inputs[].isSegWit Indicates wether the UTXO is segwit
-   * @param {Object[]} outputs Outputs of the transactions, in order.
-   * @param {string} outputs[].address Address of the output.
-   * @param {string} outputs[].amount Amount of the output.
+   * @param {TxInput[]} inputs Inputs of the transaction, in order.
+   * @param {TxOutput[]} outputs Outputs of the transactions, in order.
    */
   createTx: (inputs, outputs) => {
     console.log('Start forging TX.');
@@ -80,6 +74,11 @@ const TxService = {
       const input = inputs[i];
       const keyPair = bitcoin.ECPair.fromWIF(input.privateKey, network);
 
+      // TX to be built
+      let txBuilt;
+
+      let p2sh;
+      let scriptSig;
       let p2wpkh;
       let p2shSegwit;
 
@@ -93,26 +92,46 @@ const TxService = {
 
           // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
           txb.sign(i, keyPair, p2shSegwit.redeem.output, null, input.amount);
+          console.log('Build TX.');
+          txBuilt = txb.build();
           break;
+
         case Constants.ADDRTYPE_P2WPKH:
           // ge the P2WPKH
           p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network });
 
           // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
           txb.sign(i, keyPair, p2wpkh.redeem.output, null, input.amount);
+          console.log('Build TX.');
+          txBuilt = txb.build();
           break;
+
+        case Constants.ADDRTYPE_P2SH:
+          // scriptSig = bitcoin.script.decompile(input.redeemScript);
+          scriptSig = input.redeemScript;
+          // // ge the P2SH
+          // p2sh = bitcoin.payments.p2sh({ redeem: redeemScript, network });
+
+          // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
+          // txb.sign(i, keyPair, p2sh.redeem.output);
+          console.log('Building TX.');
+          txBuilt = txb.buildIncomplete();
+
+          txBuilt.setInputScript(i, scriptSig);
+          break;
+
         default:
           // assume P2PKH
 
           // vin, keyPair
           txb.sign(i, keyPair);
+          console.log('Build TX.');
+          txBuilt = txb.build();
           break;
       }
     }
 
-    console.log('Build TX.');
-    const txBuild = txb.build();
-    return txBuild;
+    return txBuilt;
   },
 };
 

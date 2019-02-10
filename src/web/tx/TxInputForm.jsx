@@ -16,6 +16,7 @@ class TxInputForm extends Component {
       prevTxHash: props.item.prevTxHash,
       prevTxIndex: props.item.prevTxIndex,
       privateKey: props.item.privateKey,
+      redeemScript: props.item.redeemScript,
       amount: props.item.amount,
       type: props.item.type,
     };
@@ -33,13 +34,14 @@ class TxInputForm extends Component {
     this.setState({ [event.target.id]: fieldValue }, () => {
       // get the properties and generate a TxInput object
       const {
-        index, prevTxHash, prevTxIndex, privateKey, amount, type,
+        index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type,
       } = this.state;
       const txInput = new TxInput({
         index: parseInt(index, 10),
         prevTxHash,
         prevTxIndex: parseInt(prevTxIndex, 10),
         privateKey,
+        redeemScript,
         amount: parseInt(amount, 10),
         type,
       });
@@ -51,7 +53,7 @@ class TxInputForm extends Component {
 
   render() {
     const {
-      index, prevTxHash, prevTxIndex, privateKey, amount, type,
+      index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type,
     } = this.state;
 
     return (
@@ -100,6 +102,14 @@ class TxInputForm extends Component {
             />
           </div>
           <hr />
+          <HexInputField
+            label="Redeem script"
+            id="redeemScript"
+            horizontal
+            size="sm"
+            value={redeemScript}
+            handleChange={this.onFieldChange}
+          />
           <B58InputField
             label="Private key"
             id="privateKey"
@@ -117,9 +127,10 @@ class TxInputForm extends Component {
 TxInputForm.propTypes = {
   item: PropTypes.shape({
     index: PropTypes.number.isRequired,
-    prevTxHash: PropTypes.string,
-    prevTxIndex: PropTypes.number,
+    prevTxHash: PropTypes.string.isRequired,
+    prevTxIndex: PropTypes.number.isRequired,
     privateKey: PropTypes.string,
+    redeemScript: PropTypes.string,
     amount: PropTypes.number,
     type: PropTypes.oneOf(Constants.AddressTypes),
   }).isRequired,

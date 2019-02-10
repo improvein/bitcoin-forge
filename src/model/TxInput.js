@@ -7,6 +7,7 @@ class TxInput {
     this.privateKey = '';
     this.amount = 0;
     this.type = 'P2PKH';
+    this.redeemScript = '';
 
     Object.assign(this, initialAttrs);
   }
