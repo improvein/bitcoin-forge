@@ -8,6 +8,7 @@ module.exports = {
     main: path.resolve(__dirname, 'src/index.js'),
     serviceScript: path.resolve(__dirname, 'src/service/script.js'),
     serviceTx: path.resolve(__dirname, 'src/service/tx.js'),
+    serviceAddress: path.resolve(__dirname, 'src/service/address.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
