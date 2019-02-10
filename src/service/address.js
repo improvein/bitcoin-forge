@@ -54,6 +54,7 @@ const AddressService = {
 
     const { address } = bitcoin.payments.p2sh({
       redeem: bitcoin.payments.p2wpkh({ pubkey, network }),
+      network,
     });
     return address;
   },

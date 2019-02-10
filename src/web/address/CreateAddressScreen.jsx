@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import CreateP2PKH from './CreateP2PKH';
+import CreateP2WPKH from './CreateP2WPKH';
+import CreateP2SHP2WPKH from './CreateP2SHP2WPKH';
 
 class CreateAddressScreen extends Component {
   constructor() {
@@ -99,10 +101,12 @@ class CreateAddressScreen extends Component {
               <div className="tab-pane fade" id="addr-p2wpkh" role="tabpanel">
                 <h2>P2WPKH</h2>
                 <p>Payment to Witness Public Key Hash (SegWit)</p>
+                <CreateP2WPKH />
               </div>
               <div className="tab-pane fade" id="addr-p2sh-p2wpkh" role="tabpanel">
-                <h2>P2WPKH</h2>
+                <h2>P2SH-P2WPKH</h2>
                 <p>Payment to Witness Public Key Hash, wrapped in P2SH (SegWit)</p>
+                <CreateP2SHP2WPKH />
               </div>
               <div className="tab-pane fade" id="addr-multisig-p2sh" role="tabpanel">
                 <h2>Multisig P2SH</h2>

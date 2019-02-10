@@ -38,13 +38,13 @@ class SelectNetworkField extends Component {
             <input
               type="radio"
               id={`${id}-testnet`}
-              name="network"
+              name={`${id}`}
               className="custom-control-input"
               value="testnet"
               checked={isTestnet}
               onChange={this.onNetworkChange}
             />
-            <label className="custom-control-label" htmlFor="network-testnet">
+            <label className="custom-control-label" htmlFor={`${id}-testnet`}>
               Testnet
             </label>
           </div>
@@ -52,13 +52,13 @@ class SelectNetworkField extends Component {
             <input
               type="radio"
               id={`${id}-mainnet`}
-              name="network"
+              name={`${id}`}
               className="custom-control-input"
               value="mainnet"
               checked={!isTestnet}
               onChange={this.onNetworkChange}
             />
-            <label className="custom-control-label" htmlFor="network-mainnet">
+            <label className="custom-control-label" htmlFor={`${id}-mainnet`}>
               Mainnet
             </label>
           </div>

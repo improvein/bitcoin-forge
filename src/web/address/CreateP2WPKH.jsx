@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { HexInputField, Button, SelectNetworkField } from '../components';
 import addressService from '../../service/address';
 
-class CreateP2PKH extends Component {
+class CreateP2WPKH extends Component {
   constructor(props) {
     super(props);
 
@@ -27,13 +27,7 @@ class CreateP2PKH extends Component {
   }
 
   onInputChange(event) {
-    let fieldValue = event.target.value;
-    if (event.target.type === 'checkbox') {
-      fieldValue = event.target.checked;
-    } else if (event.target.type === 'number') {
-      fieldValue = parseInt(fieldValue, 10);
-    }
-
+    const fieldValue = event.target.value;
     // update state property
     this.setState({ [event.target.id]: fieldValue });
   }
@@ -42,7 +36,7 @@ class CreateP2PKH extends Component {
     const { publicKey } = this.state;
 
     try {
-      const address = addressService.createP2PKH(publicKey);
+      const address = addressService.createP2WPKH(publicKey);
 
       this.setState({ address, errorMessage: '' }, () => {
         // fire the onUpdate event
@@ -61,7 +55,11 @@ class CreateP2PKH extends Component {
 
     return (
       <div className="">
-        <SelectNetworkField id="p2pkh-network" isTestnet={isTestnet} onChange={this.onNetworkChange} />
+        <SelectNetworkField
+          id="p2wpkh-network"
+          isTestnet={isTestnet}
+          onChange={this.onNetworkChange}
+        />
         <HexInputField
           label="Public key"
           id="publicKey"
@@ -80,15 +78,15 @@ class CreateP2PKH extends Component {
   }
 }
 
-CreateP2PKH.propTypes = {
+CreateP2WPKH.propTypes = {
   isTestnet: PropTypes.bool,
   publicKey: PropTypes.string,
   onCreate: PropTypes.func,
 };
-CreateP2PKH.defaultProps = {
+CreateP2WPKH.defaultProps = {
   isTestnet: true,
   publicKey: '',
   onCreate: () => {},
 };
 
-export default CreateP2PKH;
+export default CreateP2WPKH;

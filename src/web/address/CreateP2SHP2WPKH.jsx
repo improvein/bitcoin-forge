@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { HexInputField, Button, SelectNetworkField } from '../components';
 import addressService from '../../service/address';
 
-class CreateP2PKH extends Component {
+class CreateP2SHP2WPKH extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +16,7 @@ class CreateP2PKH extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.onNetworkChange = this.onNetworkChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    
+
     // Init
     addressService.setTestnet(true);
   }
@@ -28,12 +28,6 @@ class CreateP2PKH extends Component {
 
   onInputChange(event) {
     let fieldValue = event.target.value;
-    if (event.target.type === 'checkbox') {
-      fieldValue = event.target.checked;
-    } else if (event.target.type === 'number') {
-      fieldValue = parseInt(fieldValue, 10);
-    }
-
     // update state property
     this.setState({ [event.target.id]: fieldValue });
   }
@@ -42,7 +36,7 @@ class CreateP2PKH extends Component {
     const { publicKey } = this.state;
 
     try {
-      const address = addressService.createP2PKH(publicKey);
+      const address = addressService.createP2PH_P2WPKH(publicKey);
 
       this.setState({ address, errorMessage: '' }, () => {
         // fire the onUpdate event
@@ -61,7 +55,7 @@ class CreateP2PKH extends Component {
 
     return (
       <div className="">
-        <SelectNetworkField id="p2pkh-network" isTestnet={isTestnet} onChange={this.onNetworkChange} />
+        <SelectNetworkField id="p2shp2wpkh-network" isTestnet={isTestnet} onChange={this.onNetworkChange} />
         <HexInputField
           label="Public key"
           id="publicKey"
@@ -80,15 +74,15 @@ class CreateP2PKH extends Component {
   }
 }
 
-CreateP2PKH.propTypes = {
+CreateP2SHP2WPKH.propTypes = {
   isTestnet: PropTypes.bool,
   publicKey: PropTypes.string,
   onCreate: PropTypes.func,
 };
-CreateP2PKH.defaultProps = {
+CreateP2SHP2WPKH.defaultProps = {
   isTestnet: true,
   publicKey: '',
   onCreate: () => {},
 };
 
-export default CreateP2PKH;
+export default CreateP2SHP2WPKH;
