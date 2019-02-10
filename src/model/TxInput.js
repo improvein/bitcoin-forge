@@ -1,18 +1,14 @@
 class TxInput {
-  constructor(
-    index = 0,
-    prevTxHash = '',
-    prevTxIndex = 0,
-    privateKey = '',
-    amount = 0,
-    type = 'P2PKH',
-  ) {
-    this.index = index;
-    this.prevTxHash = prevTxHash;
-    this.prevTxIndex = prevTxIndex;
-    this.privateKey = privateKey;
-    this.amount = amount;
-    this.type = type;
+  constructor(initialAttrs) {
+    // defaults
+    this.index = 0;
+    this.prevTxHash = '';
+    this.prevTxIndex = 0;
+    this.privateKey = '';
+    this.amount = 0;
+    this.type = 'P2PKH';
+
+    Object.assign(this, initialAttrs);
   }
 
   /**

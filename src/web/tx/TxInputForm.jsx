@@ -35,14 +35,14 @@ class TxInputForm extends Component {
       const {
         index, prevTxHash, prevTxIndex, privateKey, amount, type,
       } = this.state;
-      const txInput = new TxInput(
-        parseInt(index, 10),
+      const txInput = new TxInput({
+        index: parseInt(index, 10),
         prevTxHash,
-        parseInt(prevTxIndex, 10),
+        prevTxIndex: parseInt(prevTxIndex, 10),
         privateKey,
-        parseInt(amount, 10),
+        amount: parseInt(amount, 10),
         type,
-      );
+      });
       // fire the onUpdate event
       const { onUpdate } = this.props;
       onUpdate(txInput);

@@ -50,7 +50,7 @@ class CreateTxScreen extends Component {
       );
     }
 
-    const txInput = new TxInput(lastIndex + 1);
+    const txInput = new TxInput({ index: lastIndex + 1 });
     inputs.push(txInput);
 
     this.setState({
