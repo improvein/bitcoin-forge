@@ -70,7 +70,7 @@ const App = () => (
                 Scripts
               </a>
               <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
-                <Link className="dropdown-item" to="/script/">
+                <Link className="dropdown-item" to="/script/decompile-asm">
                   Decompile ASM
                 </Link>
               </div>
@@ -94,7 +94,7 @@ const App = () => (
           <Route path="/" exact component={() => <HomeScreen />} />
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
-          <Route path="/script/" component={() => <DecompileASMScreen />} />
+          <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
         </div>
       </main>
     </div>
