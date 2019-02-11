@@ -1,5 +1,7 @@
 # Bitcoin Forge
 
+<img src="/src/web/images/bf_logo.svg" alt="BF logo" width="70" height="70">
+
 This project intends to be a suite of tools for low-level operations with Bitcoin, like forging transactions or tinker with scripts.
 
 The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github.com/bitcoinjs/bitcoinjs-lib).
