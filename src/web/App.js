@@ -11,6 +11,7 @@ import CreateTxScreen from './tx/CreateTxScreen';
 import DecompileASMScreen from './script/DecompileASMScreen';
 import CreateAddressScreen from './address/CreateAddressScreen';
 
+import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
 import './scss/main.scss';
 
@@ -22,7 +23,7 @@ const App = () => (
     <div>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <Link className="navbar-brand" to="/">
-          BF
+          <img src={bfLogo} alt="BF" width="30" height="30" />
         </Link>
         <button
           className="navbar-toggler"
