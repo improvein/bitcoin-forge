@@ -13,16 +13,19 @@ class CreateScriptScreen extends Component {
       stack: [],
       customValue: '',
       opCodes: ScriptService.getOpcodes(),
+      filteredOpCodes: ScriptService.getOpcodes(),
       script: '',
       errorMessage: '',
     };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onCustomValueAdd = this.onCustomValueAdd.bind(this);
+    this.onOpCodeFilterChange = this.onOpCodeFilterChange.bind(this);
     this.onOpcodeAdd = this.onOpcodeAdd.bind(this);
     this.onItemDragStart = this.onItemDragStart.bind(this);
     this.onItemDragOver = this.onItemDragOver.bind(this);
     this.onItemDragEnd = this.onItemDragEnd.bind(this);
+    this.onStackClear = this.onStackClear.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
   }
 
@@ -74,6 +77,18 @@ class CreateScriptScreen extends Component {
     });
   }
 
+  onOpCodeFilterChange(event) {
+    const { opCodes } = this.state;
+
+    const { value } = event.target;
+
+    let filteredOpCodes = opCodes;
+    if (value.length > 0) {
+      filteredOpCodes = opCodes.filter(opcode => opcode.name.toLowerCase().includes(value.toLowerCase()));
+    }
+    this.setState({ filteredOpCodes });
+  }
+
   onOpcodeAdd(event, opCode) {
     const { stack } = this.state;
 
@@ -87,6 +102,12 @@ class CreateScriptScreen extends Component {
     });
   }
 
+  onStackClear(event) {
+    this.setState({
+      stack: [],
+    });
+  }
+
   buttonClick(event) {
     const { stack } = this.state;
 
@@ -95,6 +116,7 @@ class CreateScriptScreen extends Component {
       const stackRaw = stack.map(stackItem => stackItem.value);
       // decompile
       const script = ScriptService.compileScript(stackRaw);
+      console.log('Compiled: ', script);
       this.setState({
         script,
         errorMessage: '',
@@ -109,7 +131,7 @@ class CreateScriptScreen extends Component {
 
   render() {
     const {
-      stack, opCodes, script, errorMessage,
+      stack, filteredOpCodes, script, errorMessage,
     } = this.state;
 
     return (
@@ -119,7 +141,17 @@ class CreateScriptScreen extends Component {
         <div className="row">
           <div className="col-12 col-sm-5">
             <div className="card">
-              <div className="card-header">Stack</div>
+              <div className="card-header">
+                <button
+                  type="button"
+                  className="btn btn-link btn-sm float-right"
+                  title="Clear stack"
+                  onClick={this.onStackClear}
+                >
+                  <FontAwesomeIcon icon="trash" />
+                </button>
+                Stack
+              </div>
               <div className="card-body">
                 <ul className="list-dnd">
                   {stack.map((item, index) => (
@@ -150,7 +182,7 @@ class CreateScriptScreen extends Component {
             <div className="form-group">
               <label htmlFor="custom-value">Custom value</label>
               <div className="input-group">
-                <div className="input-group-prepend" title="Base58">
+                <div className="input-group-prepend" title="Add value to stack">
                   <button
                     className="btn btn-outline-secondary"
                     type="button"
@@ -161,17 +193,30 @@ class CreateScriptScreen extends Component {
                 </div>
                 <input
                   type="text"
-                  className="form-control form-control"
+                  className="form-control"
                   id="customValue"
                   onChange={this.onInputChange}
                 />
               </div>
             </div>
             <div className="card">
-              <div className="card-header">Available OPCODES</div>
+              <div className="card-header">
+                <div className="row">
+                  <div className="col col-sm-6">Available OPCODES</div>
+                  <div className="col col-sm-6">
+                    <input
+                      type="search"
+                      className="form-control form-control-sm"
+                      id="opcodeFilter"
+                      onChange={this.onOpCodeFilterChange}
+                      placeholder="Filter OPCODEs"
+                    />
+                  </div>
+                </div>
+              </div>
               <div className="card-body">
                 <ul className="list-unstyled row">
-                  {opCodes.map(item => (
+                  {filteredOpCodes.map(item => (
                     <li key={item.name} className="col text-nowrap opcode-item">
                       <span className="badge badge-secondary my-1">{item.name}</span>
                       <button

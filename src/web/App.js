@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft, faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,7 +17,7 @@ import 'bootstrap';
 import './scss/main.scss';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle);
+library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
