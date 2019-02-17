@@ -126,6 +126,14 @@ class CreateScriptScreen extends Component {
   buttonClick(event) {
     const { stack } = this.state;
 
+    // check if the stack is empty
+    if (stack.length === 0) {
+      this.setState({
+        errorMessage: 'The stack is empty',
+      });
+      return;
+    }
+
     try {
       // obtain the raw values for the stack
       const stackRaw = stack.map(stackItem => stackItem.value);
@@ -158,7 +166,7 @@ class CreateScriptScreen extends Component {
         <p>Forge a script by adding items to the stack, and then compile it.</p>
         <div className="row">
           <div className="col-12 col-sm-5">
-            <div className="card">
+            <div className="card border-primary">
               <div className="card-header">
                 <button
                   type="button"
@@ -168,7 +176,7 @@ class CreateScriptScreen extends Component {
                 >
                   <FontAwesomeIcon icon="trash" />
                 </button>
-                Stack
+                <h3>Stack</h3>
               </div>
               <div className="card-body">
                 <ul className="list-dnd">
