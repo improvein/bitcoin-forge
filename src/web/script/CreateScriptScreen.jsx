@@ -19,6 +19,7 @@ class CreateScriptScreen extends Component {
       script: '',
       address: '',
       errorMessage: '',
+      addressErrorMessage: '',
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -139,9 +140,22 @@ class CreateScriptScreen extends Component {
       const stackRaw = stack.map(stackItem => stackItem.value);
       // decompile
       const script = ScriptService.compileScript(stackRaw);
-      // generate address
-      const address = AddressService.createP2SH(script);
 
+      // generate address
+      let address = '';
+      try {
+        address = AddressService.createP2SH(script);
+        this.setState({
+          addressErrorMessage: '',
+        });
+      } catch (addErr) {
+        console.error(addErr);
+        this.setState({
+          addressErrorMessage: addErr.message,
+        });
+      }
+
+      // set the state with the final results
       this.setState({
         script: script.toString('hex'),
         address,
@@ -157,7 +171,13 @@ class CreateScriptScreen extends Component {
 
   render() {
     const {
-      isTestnet, stack, filteredOpCodes, script, address, errorMessage,
+      isTestnet,
+      stack,
+      filteredOpCodes,
+      script,
+      address,
+      errorMessage,
+      addressErrorMessage,
     } = this.state;
 
     return (
@@ -274,6 +294,7 @@ class CreateScriptScreen extends Component {
             <p className="card-text" id="address-result">
               <strong>P2SH Address: </strong>
               {address}
+              <span className="text-danger">{addressErrorMessage}</span>
             </p>
           </div>
         </div>

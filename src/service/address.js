@@ -116,10 +116,7 @@ const AddressService = {
       scriptBuffer = Buffer.from(redeemScript, 'hex');
     }
 
-    const { address } = bitcoin.payments.p2sh({
-      redeem: { output: scriptBuffer, network },
-      network,
-    });
+    const address = bitcoin.address.fromOutputScript(scriptBuffer, network);
     return address;
   },
 };
