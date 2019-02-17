@@ -108,6 +108,20 @@ const AddressService = {
     });
     return address;
   },
+
+  createP2SH: (redeemScript) => {
+    let scriptBuffer = redeemScript;
+    // if string assume hex and convert to Buffer
+    if (typeof redeemScript === 'string') {
+      scriptBuffer = Buffer.from(redeemScript, 'hex');
+    }
+
+    const { address } = bitcoin.payments.p2sh({
+      redeem: { output: scriptBuffer, network },
+      network,
+    });
+    return address;
+  },
 };
 
 export default AddressService;

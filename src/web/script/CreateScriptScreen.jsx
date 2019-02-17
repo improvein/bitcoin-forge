@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Button from '../components/Button';
 import ScriptService from '../../service/script';
+import AddressService from '../../service/address';
+import { HexInput, Button, SelectNetworkField } from '../components';
 import StackItem from './StackItem';
 
 class CreateScriptScreen extends Component {
@@ -10,11 +11,13 @@ class CreateScriptScreen extends Component {
     super(props);
 
     this.state = {
+      isTestnet: true,
       stack: [],
       customValue: '',
       opCodes: ScriptService.getOpcodes(),
       filteredOpCodes: ScriptService.getOpcodes(),
       script: '',
+      address: '',
       errorMessage: '',
     };
 
@@ -26,7 +29,11 @@ class CreateScriptScreen extends Component {
     this.onItemDragOver = this.onItemDragOver.bind(this);
     this.onItemDragEnd = this.onItemDragEnd.bind(this);
     this.onStackClear = this.onStackClear.bind(this);
+    this.onNetworkChange = this.onNetworkChange.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
+
+    // Init
+    AddressService.setTestnet(true);
   }
 
   onInputChange(event) {
@@ -67,14 +74,17 @@ class CreateScriptScreen extends Component {
   onCustomValueAdd(event) {
     const { stack, customValue } = this.state;
 
-    const stackItem = new StackItem({
-      name: customValue,
-      value: customValue,
-    });
-    stack.push(stackItem);
-    this.setState({
-      stack,
-    });
+    // only add if there is a value
+    if (customValue.length > 0) {
+      const stackItem = new StackItem({
+        name: customValue,
+        value: customValue,
+      });
+      stack.push(stackItem);
+      this.setState({
+        stack,
+      });
+    }
   }
 
   onOpCodeFilterChange(event) {
@@ -108,6 +118,11 @@ class CreateScriptScreen extends Component {
     });
   }
 
+  onNetworkChange(isTestnet) {
+    AddressService.setTestnet(isTestnet);
+    this.setState({ isTestnet });
+  }
+
   buttonClick(event) {
     const { stack } = this.state;
 
@@ -116,9 +131,12 @@ class CreateScriptScreen extends Component {
       const stackRaw = stack.map(stackItem => stackItem.value);
       // decompile
       const script = ScriptService.compileScript(stackRaw);
-      console.log('Compiled: ', script);
+      // generate address
+      const address = AddressService.createP2SH(script);
+
       this.setState({
         script: script.toString('hex'),
+        address,
         errorMessage: '',
       });
     } catch (err) {
@@ -131,7 +149,7 @@ class CreateScriptScreen extends Component {
 
   render() {
     const {
-      stack, filteredOpCodes, script, errorMessage,
+      isTestnet, stack, filteredOpCodes, script, address, errorMessage,
     } = this.state;
 
     return (
@@ -176,27 +194,30 @@ class CreateScriptScreen extends Component {
               </div>
             </div>
 
+            <div className="mt-2">
+              <SelectNetworkField
+                id="p2sh-network"
+                isTestnet={isTestnet}
+                onChange={this.onNetworkChange}
+              />
+            </div>
             <p className="text-danger">{errorMessage}</p>
           </div>
           <div className="col-12 col-sm-7">
             <div className="form-group">
               <label htmlFor="custom-value">Custom value</label>
-              <div className="input-group">
-                <div className="input-group-prepend" title="Add value to stack">
-                  <button
-                    className="btn btn-outline-secondary"
-                    type="button"
-                    onClick={this.onCustomValueAdd}
-                  >
-                    <FontAwesomeIcon icon="arrow-left" />
-                  </button>
+              <div className="d-flex">
+                <button
+                  className="btn btn-link"
+                  type="button"
+                  title="Add value to stack"
+                  onClick={this.onCustomValueAdd}
+                >
+                  <FontAwesomeIcon icon="plus-circle" />
+                </button>
+                <div className="flex-grow-1">
+                  <HexInput id="customValue" onChange={this.onInputChange} />
                 </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="customValue"
-                  onChange={this.onInputChange}
-                />
               </div>
             </div>
             <div className="card">
@@ -237,9 +258,14 @@ class CreateScriptScreen extends Component {
         <Button text="Compile" btnClass="primary" onClick={this.buttonClick} />
         <div className="card mt-3">
           <div className="card-body">
-            <h5 className="card-title">Result (ASM)</h5>
+            <h5 className="card-title">Result</h5>
             <p className="card-text" id="asm-result">
+              <strong>Raw script (hex): </strong>
               {script}
+            </p>
+            <p className="card-text" id="address-result">
+              <strong>P2SH Address: </strong>
+              {address}
             </p>
           </div>
         </div>

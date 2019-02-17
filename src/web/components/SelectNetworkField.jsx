@@ -34,7 +34,7 @@ class SelectNetworkField extends Component {
       <div className="form-group row">
         <label className="col-sm-3 col-form-label">Network</label>
         <div className="col-sm-9">
-          <div className="custom-control custom-radio custom-control-inline">
+          <div className="custom-control custom-radio custom-control-inline my-2">
             <input
               type="radio"
               id={`${id}-testnet`}
