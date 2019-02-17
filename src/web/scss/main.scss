@@ -8,3 +8,15 @@
 .text-console {
   font-family: "Courier New", Courier, monospace;
 }
+
+.list-dnd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  .list-dnd-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    cursor: move;
+  }
+}

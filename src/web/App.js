@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,6 +9,7 @@ import HomeScreen from './HomeScreen';
 import DecodeTxScreen from './tx/DecodeTxScreen';
 import CreateTxScreen from './tx/CreateTxScreen';
 import DecompileASMScreen from './script/DecompileASMScreen';
+import CreateScriptScreen from './script/CreateScriptScreen';
 import CreateAddressScreen from './address/CreateAddressScreen';
 
 import bfLogo from './images/bf_logo.svg';
@@ -16,7 +17,7 @@ import 'bootstrap';
 import './scss/main.scss';
 
 // icons to be used
-library.add(faArrowRight, faGithub, faPlusCircle);
+library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
@@ -93,6 +94,9 @@ const App = () => (
                 <Link className="dropdown-item" to="/script/decompile-asm">
                   Decompile ASM
                 </Link>
+                <Link className="dropdown-item" to="/script/create">
+                  Forge / Create
+                </Link>
               </div>
             </li>
           </ul>
@@ -115,6 +119,7 @@ const App = () => (
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
           <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
+          <Route path="/script/create" component={() => <CreateScriptScreen />} />
           <Route path="/address/create" component={() => <CreateAddressScreen />} />
         </div>
       </main>
