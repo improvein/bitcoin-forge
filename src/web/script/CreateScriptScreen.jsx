@@ -118,7 +118,7 @@ class CreateScriptScreen extends Component {
       const script = ScriptService.compileScript(stackRaw);
       console.log('Compiled: ', script);
       this.setState({
-        script,
+        script: script.toString('hex'),
         errorMessage: '',
       });
     } catch (err) {

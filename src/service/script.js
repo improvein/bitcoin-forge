@@ -23,7 +23,15 @@ const scriptService = {
    * @param {array} stack Stack of commands to compile
    */
   compileScript: (stack) => {
-    const compiledScript = bitcoin.script.compile(stack);
+    const parsedStack = stack.map((stackValue) => {
+      if (typeof stackValue === 'string') {
+        // asume hexadecimal
+        return Buffer.from(stackValue, 'hex');
+      }
+      // assume numeric, return raw value
+      return stackValue;
+    });
+    const compiledScript = bitcoin.script.compile(parsedStack);
     return compiledScript;
   },
 
