@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ScriptService from '../../service/script';
 import AddressService from '../../service/address';
-import { HexInput, Button, SelectNetworkField } from '../components';
+import { HexInput, Button } from '../components';
 import StackItem from './StackItem';
 
 class CreateScriptScreen extends Component {
@@ -11,15 +11,12 @@ class CreateScriptScreen extends Component {
     super(props);
 
     this.state = {
-      isTestnet: true,
       stack: [],
       customValue: '',
       opCodes: ScriptService.getOpcodes(),
       filteredOpCodes: ScriptService.getOpcodes(),
       script: '',
-      address: '',
       errorMessage: '',
-      addressErrorMessage: '',
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -30,7 +27,6 @@ class CreateScriptScreen extends Component {
     this.onItemDragOver = this.onItemDragOver.bind(this);
     this.onItemDragEnd = this.onItemDragEnd.bind(this);
     this.onStackClear = this.onStackClear.bind(this);
-    this.onNetworkChange = this.onNetworkChange.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
 
     // Init
@@ -68,11 +64,11 @@ class CreateScriptScreen extends Component {
     this.setState({ stack: newStack });
   }
 
-  onItemDragEnd(event) {
+  onItemDragEnd() {
     this.draggedStackItem = null;
   }
 
-  onCustomValueAdd(event) {
+  onCustomValueAdd() {
     const { stack, customValue } = this.state;
 
     // only add if there is a value
@@ -113,18 +109,13 @@ class CreateScriptScreen extends Component {
     });
   }
 
-  onStackClear(event) {
+  onStackClear() {
     this.setState({
       stack: [],
     });
   }
 
-  onNetworkChange(isTestnet) {
-    AddressService.setTestnet(isTestnet);
-    this.setState({ isTestnet });
-  }
-
-  buttonClick(event) {
+  buttonClick() {
     const { stack } = this.state;
 
     // check if the stack is empty
@@ -141,24 +132,9 @@ class CreateScriptScreen extends Component {
       // decompile
       const script = ScriptService.compileScript(stackRaw);
 
-      // generate address
-      let address = '';
-      try {
-        address = AddressService.createP2SH(script);
-        this.setState({
-          addressErrorMessage: '',
-        });
-      } catch (addErr) {
-        console.error(addErr);
-        this.setState({
-          addressErrorMessage: addErr.message,
-        });
-      }
-
       // set the state with the final results
       this.setState({
         script: script.toString('hex'),
-        address,
         errorMessage: '',
       });
     } catch (err) {
@@ -171,13 +147,7 @@ class CreateScriptScreen extends Component {
 
   render() {
     const {
-      isTestnet,
-      stack,
-      filteredOpCodes,
-      script,
-      address,
-      errorMessage,
-      addressErrorMessage,
+      stack, filteredOpCodes, script, errorMessage,
     } = this.state;
 
     return (
@@ -222,13 +192,6 @@ class CreateScriptScreen extends Component {
               </div>
             </div>
 
-            <div className="mt-2">
-              <SelectNetworkField
-                id="p2sh-network"
-                isTestnet={isTestnet}
-                onChange={this.onNetworkChange}
-              />
-            </div>
             <p className="text-danger">{errorMessage}</p>
           </div>
           <div className="col-12 col-sm-7">
@@ -286,15 +249,9 @@ class CreateScriptScreen extends Component {
         <Button text="Compile" btnClass="primary" onClick={this.buttonClick} />
         <div className="card mt-3">
           <div className="card-body">
-            <h5 className="card-title">Result</h5>
-            <p className="card-text" id="asm-result">
-              <strong>Raw script (hex): </strong>
+            <h5 className="card-title">Result raw script (hex)</h5>
+            <p className="card-text" id="hex-result">
               {script}
-            </p>
-            <p className="card-text" id="address-result">
-              <strong>P2SH Address: </strong>
-              {address}
-              <span className="text-danger">{addressErrorMessage}</span>
             </p>
           </div>
         </div>
