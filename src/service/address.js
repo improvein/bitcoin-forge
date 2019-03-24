@@ -124,6 +124,22 @@ const AddressService = {
 
     return address;
   },
+
+  createP2WSH: (redeemScript) => {
+    let scriptBuffer = redeemScript;
+    // if string assume hex and convert to Buffer
+    if (typeof redeemScript === 'string') {
+      scriptBuffer = Buffer.from(redeemScript, 'hex');
+    }
+
+    // use the redeem script to create the P2WSH address
+    const { address } = bitcoin.payments.p2wsh({
+      redeem: { output: scriptBuffer, network },
+      network,
+    });
+
+    return address;
+  },
 };
 
 export default AddressService;

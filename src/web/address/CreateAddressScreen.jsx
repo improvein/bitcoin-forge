@@ -7,6 +7,7 @@ import CreateMultisigP2SH from './CreateMultisigP2SH';
 import CreateMultisigP2WSH from './CreateMultisigP2WSH';
 import CreateMultisigP2SHP2WSH from './CreateMultisigP2SHP2WSH';
 import CreateP2SH from './CreateP2SH';
+import CreateP2WSH from './CreateP2WSH';
 
 class CreateAddressScreen extends Component {
   constructor() {
@@ -104,6 +105,17 @@ class CreateAddressScreen extends Component {
               >
                 P2SH
               </a>
+              <a
+                className="nav-link"
+                id="addr-p2wsh-tab"
+                data-toggle="pill"
+                href="#addr-p2wsh"
+                role="tab"
+                aria-controls="addr-p2wsh"
+                aria-selected="false"
+              >
+                P2WSH
+              </a>
             </div>
           </div>
           <div className="col-9">
@@ -142,6 +154,11 @@ class CreateAddressScreen extends Component {
                 <h2>P2SH</h2>
                 <p>Payment to Script Hash</p>
                 <CreateP2SH />
+              </div>
+              <div className="tab-pane fade" id="addr-p2wsh" role="tabpanel">
+                <h2>P2WSH</h2>
+                <p>Payment to Witness Script Hash</p>
+                <CreateP2WSH />
               </div>
             </div>
           </div>
