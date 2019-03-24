@@ -6,6 +6,7 @@ import CreateP2SHP2WPKH from './CreateP2SHP2WPKH';
 import CreateMultisigP2SH from './CreateMultisigP2SH';
 import CreateMultisigP2WSH from './CreateMultisigP2WSH';
 import CreateMultisigP2SHP2WSH from './CreateMultisigP2SHP2WSH';
+import CreateP2SH from './CreateP2SH';
 
 class CreateAddressScreen extends Component {
   constructor() {
@@ -92,6 +93,17 @@ class CreateAddressScreen extends Component {
               >
                 Multisig P2SH-P2WSH (SegWit)
               </a>
+              <a
+                className="nav-link"
+                id="addr-p2sh-tab"
+                data-toggle="pill"
+                href="#addr-p2sh"
+                role="tab"
+                aria-controls="addr-p2sh"
+                aria-selected="false"
+              >
+                P2SH
+              </a>
             </div>
           </div>
           <div className="col-9">
@@ -125,6 +137,11 @@ class CreateAddressScreen extends Component {
                 <h2>Multisig P2SH-P2WSH (SegWit)</h2>
                 <p>Payment to Multi Signature using P2WSH, wrapped in P2SH</p>
                 <CreateMultisigP2SHP2WSH />
+              </div>
+              <div className="tab-pane fade" id="addr-p2sh" role="tabpanel">
+                <h2>P2SH</h2>
+                <p>Payment to Script Hash</p>
+                <CreateP2SH />
               </div>
             </div>
           </div>
