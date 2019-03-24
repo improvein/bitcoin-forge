@@ -14,7 +14,7 @@ Some things that can be done with this toolkit:
   * Create a transaction by defining the inputs and outputs specifically
   * Deconde a transaction from it's raw hexa
 * Address
-  * Create an address in different formats given the public key(s)
+  * Create an address in different formats given the public key(s) or redeem script
 * Scripts
   * Decompile the script ASM given the raw hexa notation
   * Create a script manually by adding values or OPCODES to the stack
