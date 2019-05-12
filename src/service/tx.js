@@ -68,17 +68,24 @@ const TxService = {
       txb.addOutput(output.address, output.amount);
     });
 
-    // now sign the inputs
+    // Now that the base transaction structure is created
+    // we can sign the proper inputs since we needed the hash of a simplified tx to do it
+
+    // now sign the inputs that need to be signed
     console.log('Sign the inputs.');
-    for (let i = 0; i < inputs.length; i += 1) {
-      const input = inputs[i];
+    inputs.forEach((input, i) => {
+      // only for INPUTS that require signing
+      if (
+        ![
+          Constants.ADDRTYPE_P2PKH,
+          Constants.ADDRTYPE_P2WPKH,
+          Constants.ADDRTYPE_P2SH_P2WPKH,
+        ].includes(input.type)
+      ) {
+        return;
+      }
+
       const keyPair = bitcoin.ECPair.fromWIF(input.privateKey, network);
-
-      // TX to be built
-      let txBuilt;
-
-      let p2sh;
-      let scriptSig;
       let p2wpkh;
       let p2shSegwit;
 
@@ -92,8 +99,6 @@ const TxService = {
 
           // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
           txb.sign(i, keyPair, p2shSegwit.redeem.output, null, input.amount);
-          console.log('Build TX.');
-          txBuilt = txb.build();
           break;
 
         case Constants.ADDRTYPE_P2WPKH:
@@ -102,34 +107,43 @@ const TxService = {
 
           // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
           txb.sign(i, keyPair, p2wpkh.redeem.output, null, input.amount);
-          console.log('Build TX.');
-          txBuilt = txb.build();
           break;
 
+        case Constants.ADDRTYPE_P2PKH:
+          // vin, keyPair
+          txb.sign(i, keyPair);
+          break;
+        default:
+        // DO NOTHING
+      }
+    });
+
+    // Now that everything that needs to be signed it is
+    // build the TX in order to assign the redeem scripts
+
+    // TX built to add redeem
+    const txBuilt = txb.buildIncomplete();
+
+    // now set the redeem scripts
+    console.log('Set redeem scripts for inputs.');
+    inputs.forEach((input, i) => {
+      // only for INPUTS that require redeem script
+      if (![Constants.ADDRTYPE_P2SH, Constants.ADDRTYPE_P2WSH].includes(input.type)) {
+        return;
+      }
+
+      let scriptSig;
+
+      switch (input.type) {
         case Constants.ADDRTYPE_P2SH:
-          // scriptSig = bitcoin.script.decompile(input.redeemScript);
           scriptSig = input.redeemScript;
-          // // ge the P2SH
-          // p2sh = bitcoin.payments.p2sh({ redeem: redeemScript, network });
-
-          // vin, keyPair, redeemScript, hashType, witnessValue, witnessScript
-          // txb.sign(i, keyPair, p2sh.redeem.output);
-          console.log('Building TX.');
-          txBuilt = txb.buildIncomplete();
-
-          txBuilt.setInputScript(i, scriptSig);
+          txBuilt.setInputScript(i, Buffer.from(scriptSig, 'hex'));
           break;
 
         default:
-          // assume P2PKH
-
-          // vin, keyPair
-          txb.sign(i, keyPair);
-          console.log('Build TX.');
-          txBuilt = txb.build();
-          break;
+        // DO NOTHING
       }
-    }
+    });
 
     return txBuilt;
   },

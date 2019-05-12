@@ -102,22 +102,28 @@ class TxInputForm extends Component {
             />
           </div>
           <hr />
-          <HexInputField
-            label="Redeem script"
-            id="redeemScript"
-            horizontal
-            size="sm"
-            value={redeemScript}
-            handleChange={this.onFieldChange}
-          />
-          <B58InputField
-            label="Private key"
-            id="privateKey"
-            horizontal
-            size="sm"
-            value={privateKey}
-            handleChange={this.onFieldChange}
-          />
+          {type === Constants.ADDRTYPE_P2SH && (
+            <HexInputField
+              label="Redeem script"
+              id="redeemScript"
+              horizontal
+              size="sm"
+              value={redeemScript}
+              helpMessage="Script: [your solution] + [Lock script in Hexa]"
+              handleChange={this.onFieldChange}
+            />
+          )}
+
+          {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH) && (
+            <B58InputField
+              label="Private key"
+              id="privateKey"
+              horizontal
+              size="sm"
+              value={privateKey}
+              handleChange={this.onFieldChange}
+            />
+          )}
         </div>
       </div>
     );
