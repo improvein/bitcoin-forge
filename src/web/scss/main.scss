@@ -20,3 +20,10 @@
     cursor: move;
   }
 }
+
+.available-opcodes {
+  .card-body {
+    overflow: auto;
+    max-height: 13rem;
+  }
+}

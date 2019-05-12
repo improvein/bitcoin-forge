@@ -214,7 +214,7 @@ class CreateScriptScreen extends Component {
                 </div>
               </div>
             </div>
-            <div className="card">
+            <div className="card available-opcodes">
               <div className="card-header">
                 <div className="row">
                   <div className="col col-sm-6">Available OPCODES</div>
