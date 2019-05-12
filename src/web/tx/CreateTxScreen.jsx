@@ -134,7 +134,7 @@ class CreateTxScreen extends Component {
     return (
       <div>
         <h1>Create Transaction</h1>
-        <p>Create (forge) a transaction.</p>
+        <p>Create (forge) a transaction indicating how the inputs and ooutputs are composed.</p>
         <form id="tx-form" className="row">
           <div className="col-6">
             <div className="form-group row">
@@ -175,12 +175,10 @@ class CreateTxScreen extends Component {
           <div className="col-sm">
             <h2>
               <div className="float-right">
-                <Button
-                  text={<FontAwesomeIcon icon="plus-circle" />}
-                  btnClass="link"
-                  onClick={this.onAddInput}
-                  title="Add new input"
-                />
+                <Button btnClass="primary" size="sm" onClick={this.onAddInput}>
+                  <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                  Add new input
+                </Button>
               </div>
               Inputs
             </h2>
@@ -194,12 +192,10 @@ class CreateTxScreen extends Component {
           <div className="col-sm">
             <h2>
               <div className="float-right">
-                <Button
-                  text={<FontAwesomeIcon icon="plus-circle" />}
-                  btnClass="link"
-                  onClick={this.onAddOutput}
-                  title="Add new output"
-                />
+                <Button btnClass="primary" size="sm" onClick={this.onAddOutput}>
+                  <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                  Add new output
+                </Button>
               </div>
               Outputs
             </h2>
