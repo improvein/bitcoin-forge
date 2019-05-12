@@ -1,27 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import HomeScreen from './web/HomeScreen';
-import DecodeTxScreen from './web/tx/DecodeTxScreen';
-import CreateTxScreen from './web/tx/CreateTxScreen';
-import DecompileASMScreen from './web/script/DecompileASMScreen';
+import HomeScreen from './HomeScreen';
+import DecodeTxScreen from './tx/DecodeTxScreen';
+import CreateTxScreen from './tx/CreateTxScreen';
+import DecompileASMScreen from './script/DecompileASMScreen';
+import CreateScriptScreen from './script/CreateScriptScreen';
+import CreateAddressScreen from './address/CreateAddressScreen';
 
+import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
-import './web/scss/main.scss';
+import './scss/main.scss';
 
 // icons to be used
-library.add(faArrowRight, faGithub, faPlusCircle);
+library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
     <div>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <Link className="navbar-brand" to="/">
-          BF
+          <img src={bfLogo} alt="BF" width="30" height="30" />
         </Link>
         <button
           className="navbar-toggler"
@@ -61,7 +64,25 @@ const App = () => (
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
-                id="transactions-dropdown"
+                id="address-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Address
+              </a>
+              <div className="dropdown-menu" aria-labelledby="address-dropdown">
+                <Link className="dropdown-item" to="/address/create">
+                  Create
+                </Link>
+              </div>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="scripts-dropdown"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -69,9 +90,12 @@ const App = () => (
               >
                 Scripts
               </a>
-              <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
-                <Link className="dropdown-item" to="/script/">
+              <div className="dropdown-menu" aria-labelledby="scripts-dropdown">
+                <Link className="dropdown-item" to="/script/decompile-asm">
                   Decompile ASM
+                </Link>
+                <Link className="dropdown-item" to="/script/create">
+                  Forge / Create
                 </Link>
               </div>
             </li>
@@ -94,7 +118,9 @@ const App = () => (
           <Route path="/" exact component={() => <HomeScreen />} />
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
-          <Route path="/script/" component={() => <DecompileASMScreen />} />
+          <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
+          <Route path="/script/create" component={() => <CreateScriptScreen />} />
+          <Route path="/address/create" component={() => <CreateAddressScreen />} />
         </div>
       </main>
     </div>

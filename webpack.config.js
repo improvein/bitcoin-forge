@@ -2,12 +2,14 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: path.resolve(__dirname, 'src/index.js'),
+    main: path.resolve(__dirname, 'src/web/index.js'),
     serviceScript: path.resolve(__dirname, 'src/service/script.js'),
     serviceTx: path.resolve(__dirname, 'src/service/tx.js'),
+    serviceAddress: path.resolve(__dirname, 'src/service/address.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -59,6 +61,19 @@ module.exports = {
           },
         ],
       },
+
+      {
+        test: /\.(png|jp(e*)g|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8000, // Convert images < 8kb to base64 strings
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -80,5 +95,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
+    new CopyWebpackPlugin([{ from: 'src/web/public' }]),
   ],
 };

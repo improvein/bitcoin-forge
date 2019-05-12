@@ -1,10 +1,23 @@
 # Bitcoin Forge
 
+<img src="/src/web/images/bf_logo.svg" alt="BF logo" width="70" height="70">
+
 This project intends to be a suite of tools for low-level operations with Bitcoin, like forging transactions or tinker with scripts.
 
 The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github.com/bitcoinjs/bitcoinjs-lib).
 
 The front-end is developed mainly using [React](https://reactjs.org), [Bootstrap](https://getbootstrap.com) and [other libraries](https://github.com/improvein/bitcoin-forge/blob/master/package.json)
+
+## Features
+Some things that can be done with this toolkit:
+* Transactions
+  * Create a transaction by defining the inputs and outputs specifically
+  * Deconde a transaction from it's raw hexa
+* Address
+  * Create an address in different formats given the public key(s) or redeem script
+* Scripts
+  * Decompile the script ASM given the raw hexa notation
+  * Create a script manually by adding values or OPCODES to the stack
 
 ## Online version
 You can use the already compiled version at https://improvein.github.io/bitcoin-forge/

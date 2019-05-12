@@ -9,4 +9,5 @@ export { default as HexInputField } from './HexInputField';
 export { default as InputField } from './InputField';
 export { default as SelectInput } from './SelectInput';
 export { default as SelectInputField } from './SelectInputField';
+export { default as SelectNetworkField } from './SelectNetworkField';
 export { default as SwitchField } from './SwitchField';
