@@ -1,7 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft, faArrowRight, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faPlusCircle,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -16,12 +21,14 @@ import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
 import './scss/main.scss';
 
+import projectPackage from '../../package.json';
+
 // icons to be used
 library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
-    <div>
+    <>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <Link className="navbar-brand" to="/">
           <img src={bfLogo} alt="BF" width="30" height="30" />
@@ -123,7 +130,16 @@ const App = () => (
           <Route path="/address/create" component={() => <CreateAddressScreen />} />
         </div>
       </main>
-    </div>
+      <footer className="footer mt-auto py-3">
+        <div className="container">
+          <span className="float-right">{`v${projectPackage.version}`}</span>
+          <span className="text-muted">
+            The Bitcoin Forge is developed with ❤️+💻 by
+            <a href="https://www.improvein.com">Improve-in</a>
+          </span>
+        </div>
+      </footer>
+    </>
   </Router>
 );
 
