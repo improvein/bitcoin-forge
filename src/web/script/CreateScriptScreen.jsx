@@ -172,7 +172,7 @@ class CreateScriptScreen extends Component {
                 <ul className="list-dnd">
                   {stack.map((item, index) => (
                     <li
-                      key={index}
+                      key={index.toString()}
                       draggable
                       className="list-dnd-item"
                       onDragStart={e => this.onItemDragStart(e, index)}
@@ -189,6 +189,9 @@ class CreateScriptScreen extends Component {
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="card-footer">
+                <small>You can drag &amp; drop opcodes in order to sort them.</small>
               </div>
             </div>
 
