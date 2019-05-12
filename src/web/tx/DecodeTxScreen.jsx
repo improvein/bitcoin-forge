@@ -49,7 +49,7 @@ class DecodeTxScreen extends Component {
     return (
       <div>
         <h1>Decode Transaction</h1>
-        <p>Decode a transaction from it&#39;s hexadecimal notation.</p>
+        <p>Decode a transaction from its hexadecimal notation.</p>
         <form id="decodetx-form" className="">
           <div className="">
             <div className="form-group">
