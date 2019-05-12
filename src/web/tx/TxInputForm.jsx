@@ -56,6 +56,13 @@ class TxInputForm extends Component {
       index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type,
     } = this.state;
 
+    const availableInputTypes = Constants.AddressTypes.filter(addrType => [
+      Constants.ADDRTYPE_P2PKH,
+      Constants.ADDRTYPE_P2SH,
+      Constants.ADDRTYPE_P2WPKH,
+      Constants.ADDRTYPE_P2SH_P2WPKH,
+    ].includes(addrType));
+
     return (
       <div className="card mb-1">
         <div className="card-header">{`Input #${index}`}</div>
@@ -86,7 +93,7 @@ class TxInputForm extends Component {
               size="sm"
               horizontal
               value={type}
-              choices={Constants.AddressTypes.map(addrType => ({
+              choices={availableInputTypes.map(addrType => ({
                 text: addrType,
                 value: addrType,
               }))}
