@@ -18,14 +18,16 @@ class HexInput extends Component {
     if (/^[0-9a-fA-F]*$/g.test(value)) {
       this.setState({
         value: value.toLowerCase(),
+        errorMessage: '',
       });
-      // call the outside handler
-      this.props.onChange(event);
     } else {
       this.setState({
+        value: value.toLowerCase(),
         errorMessage: 'The value is not hexadecimal',
       });
     }
+    // call the outside handler
+    this.props.onChange(event);
   }
 
   render() {
@@ -39,11 +41,12 @@ class HexInput extends Component {
         </div>
         <input
           type="text"
-          className={`text-console form-control ${errorMessage !== '' ? 'has-error' : ''}`}
+          className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}
           id={id}
           value={value}
           onChange={this.onInputChange}
         />
+        {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
       </div>
     );
   }

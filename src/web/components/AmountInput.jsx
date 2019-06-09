@@ -17,6 +17,7 @@ class AmountInput extends Component {
     // validate if numeric
     if (/^[0-9]*$/g.test(value)) {
       this.setState({
+        errorMessage: '',
         value: parseInt(value, 10),
       });
       // call the outside handler
@@ -36,7 +37,7 @@ class AmountInput extends Component {
       <div className={`input-group input-group-${size}`}>
         <input
           type="number"
-          className={`form-control ${errorMessage !== '' ? 'has-error' : ''}`}
+          className={`form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}
           id={id}
           value={value}
           pattern="[0-9]*"
@@ -45,6 +46,7 @@ class AmountInput extends Component {
         <div className="input-group-append">
           <span className="input-group-text">{unit}</span>
         </div>
+        {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
       </div>
     );
   }

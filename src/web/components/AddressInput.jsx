@@ -16,7 +16,7 @@ class AddressInput extends Component {
     const { value } = event.target;
     // validate if base58 or bech32
     if (
-      /^[1-3,5,m][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/g.test(value)
+      /^[1-35m][123456789ABCDEFGHJKLMNPQRSTUVWXYzabcdefghijkmnopqrstuvwxyz]+$/g.test(value)
       || /^(bc|tb)([0-9]|1[0-6])[23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz]+$/g.test(
         value,
       )
@@ -28,7 +28,7 @@ class AddressInput extends Component {
     } else {
       this.setState({
         value,
-        errorMessage: 'The value is not a valid address format',
+        errorMessage: 'The value is not a valid address',
       });
     }
 
@@ -41,21 +41,19 @@ class AddressInput extends Component {
     const { value, errorMessage } = this.state;
 
     return (
-      <>
-        <div className={`input-group input-group-${size}`}>
-          <div className="input-group-prepend" title="Bitcoin Address">
-            <span className="input-group-text">Addr</span>
-          </div>
-          <input
-            type="text"
-            className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}
-            id={id}
-            value={value}
-            onChange={this.onInputChange}
-          />
-          {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
+      <div className={`input-group input-group-${size}`}>
+        <div className="input-group-prepend" title="Bitcoin Address">
+          <span className="input-group-text">Addr</span>
         </div>
-      </>
+        <input
+          type="text"
+          className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}
+          id={id}
+          value={value}
+          onChange={this.onInputChange}
+        />
+        {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
+      </div>
     );
   }
 }
