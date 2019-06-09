@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { AmountInputField, B58InputField } from '../components';
+import { AmountInputField, AddressInputField } from '../components';
 import { TxOutput } from '../../model';
 
 class TxOutputForm extends Component {
@@ -40,7 +40,7 @@ class TxOutputForm extends Component {
       <div className="card mb-1">
         <div className="card-header">{`Output #${index}`}</div>
         <div className="card-body">
-          <B58InputField
+          <AddressInputField
             label="Address"
             id="address"
             horizontal
