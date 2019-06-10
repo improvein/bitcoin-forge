@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import QRCode from 'qrcode.react';
 import { HexInputField, Button, SelectNetworkField } from '../components';
 import addressService from '../../service/address';
 
@@ -81,6 +82,7 @@ class CreateP2SH extends Component {
         <div className="form-group">
           <label>Address</label>
           <p className="text-console form-control-plaintext">{address}</p>
+          {address !== '' && <QRCode value={address} size={192} />}
         </div>
       </div>
     );

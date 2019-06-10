@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import QRCode from 'qrcode.react';
 import { HexInputField, Button, SelectNetworkField } from '../components';
 import addressService from '../../service/address';
 
@@ -27,7 +28,7 @@ class CreateP2PKH extends Component {
   }
 
   onInputChange(event) {
-    let fieldValue = event.target.value;
+    const fieldValue = event.target.value;
 
     // update state property
     this.setState({ [event.target.id]: fieldValue });
@@ -56,7 +57,11 @@ class CreateP2PKH extends Component {
 
     return (
       <div className="">
-        <SelectNetworkField id="p2pkh-network" isTestnet={isTestnet} onChange={this.onNetworkChange} />
+        <SelectNetworkField
+          id="p2pkh-network"
+          isTestnet={isTestnet}
+          onChange={this.onNetworkChange}
+        />
         <HexInputField
           label="Public key"
           id="publicKey"
@@ -69,6 +74,7 @@ class CreateP2PKH extends Component {
         <div className="form-group">
           <label>Address</label>
           <p className="text-console form-control-plaintext">{address}</p>
+          {address !== '' && <QRCode value={address} size={192} />}
         </div>
       </div>
     );
