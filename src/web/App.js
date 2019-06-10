@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
   faArrowRight,
+  faExclamationTriangle,
   faPlusCircle,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +25,7 @@ import './scss/main.scss';
 import projectPackage from '../../package.json';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faGithub, faPlusCircle, faTrash);
+library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faGithub, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
@@ -135,6 +136,7 @@ const App = () => (
           <span className="text-muted float-right">{`v${projectPackage.version}`}</span>
           <span className="text-muted">
             The Bitcoin Forge is developed with ❤️+💻 by
+            {' '}
             <a href="https://www.improvein.com">Improve-in</a>
           </span>
         </div>

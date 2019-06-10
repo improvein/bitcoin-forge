@@ -2,7 +2,7 @@
 
 <img src="/src/web/images/bf_logo.svg" alt="BF logo" width="70" height="70">
 
-This project intends to be a suite of tools for low-level operations with Bitcoin, like forging transactions or tinker with scripts.
+This project intends to be an **offline** suite of tools for low-level operations with Bitcoin, like forging transactions or tinker with scripts.
 
 The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github.com/bitcoinjs/bitcoinjs-lib).
 
@@ -19,8 +19,10 @@ Some things that can be done with this toolkit:
   * Decompile the script ASM given the raw hexa notation
   * Create a script manually by adding values or OPCODES to the stack
 
-## Online version
+## Web version
 You can use the already compiled version at https://improvein.github.io/bitcoin-forge/
+
+Even if that version is published online, it should work offline without issues.
 
 ## Local version
 The project should run locally without internet connection. That is why you can run the local version with the files under the [dist](https://github.com/improvein/bitcoin-forge/tree/master/dist) folder
