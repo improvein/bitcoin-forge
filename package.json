@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-forge",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Bitcoin tx forge tools",
   "main": "cli.js",
   "scripts": {
