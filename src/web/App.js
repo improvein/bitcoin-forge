@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
   faArrowRight,
+  faCogs,
   faExclamationTriangle,
   faPlusCircle,
   faTrash,
@@ -14,9 +15,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HomeScreen from './HomeScreen';
 import DecodeTxScreen from './tx/DecodeTxScreen';
 import CreateTxScreen from './tx/CreateTxScreen';
+import CreateAddressScreen from './address/CreateAddressScreen';
 import DecompileASMScreen from './script/DecompileASMScreen';
 import CreateScriptScreen from './script/CreateScriptScreen';
-import CreateAddressScreen from './address/CreateAddressScreen';
+import CreateMiniscriptScreen from './script/CreateMiniscriptScreen';
 
 import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
@@ -25,7 +27,7 @@ import './scss/main.scss';
 import projectPackage from '../../package.json';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faGithub, faPlusCircle, faTrash);
+library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
@@ -105,6 +107,9 @@ const App = () => (
                 <Link className="dropdown-item" to="/script/create">
                   Forge / Create
                 </Link>
+                <Link className="dropdown-item" to="/script/create-miniscript">
+                  Miniscript
+                </Link>
               </div>
             </li>
           </ul>
@@ -126,9 +131,10 @@ const App = () => (
           <Route path="/" exact component={() => <HomeScreen />} />
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
+          <Route path="/address/create" component={() => <CreateAddressScreen />} />
           <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
           <Route path="/script/create" component={() => <CreateScriptScreen />} />
-          <Route path="/address/create" component={() => <CreateAddressScreen />} />
+          <Route path="/script/create-miniscript" component={() => <CreateMiniscriptScreen />} />
         </div>
       </main>
       <footer className="footer mt-auto py-3">
