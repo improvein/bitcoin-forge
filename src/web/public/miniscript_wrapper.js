@@ -1,3 +1,4 @@
+/* global Module */
 em_miniscript_compile = Module.cwrap('miniscript_compile', 'none', [
   'string',
   'number',
