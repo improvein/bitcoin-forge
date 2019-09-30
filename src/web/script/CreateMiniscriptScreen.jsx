@@ -82,7 +82,7 @@ class CreateMiniscriptScreen extends Component {
           <a href="http://bitcoin.sipa.be/miniscript/">http://bitcoin.sipa.be/miniscript/</a>
         </p>
         <div className="row">
-          <div className="col-12 col-sm-7">
+          <div className="col-12 col-md-7">
             <InputField
               label="Policy"
               id="policy"
@@ -112,11 +112,11 @@ class CreateMiniscriptScreen extends Component {
             </div>
             <div className="form-group">
               <label>Result raw script (hex)</label>
-              <p className="text-console form-control-plaintext">{compiledScript}</p>
+              <code>{compiledScript}</code>
             </div>
           </div>
 
-          <div className="col-12 col-sm-5">
+          <div className="col-12 col-md-5">
             <div className="card">
               <div className="card-header">
                 <h3>Help</h3>
