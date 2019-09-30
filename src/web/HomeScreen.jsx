@@ -38,6 +38,13 @@ suite of tools for low-level operations
         <ul>
           <li>Decompile the script ASM given the raw hexa notation</li>
           <li>Create a script manually by adding values or OPCODES to the stack</li>
+          <li>
+            Create a script by using
+            {' '}
+            <a href="http://bitcoin.sipa.be/miniscript/">Miniscript</a>
+            {' '}
+            notation
+          </li>
         </ul>
       </li>
     </ul>
@@ -56,7 +63,11 @@ suite of tools for low-level operations
       <a href="https://github.com/improvein/bitcoin-forge/blob/master/package.json">
         some other libraries
       </a>
-      <FontAwesomeIcon icon="exclamation-triangle" className="ml-1" title="be careful of 3rd party libraries" />
+      <FontAwesomeIcon
+        icon="exclamation-triangle"
+        className="ml-1"
+        title="be careful of 3rd party libraries"
+      />
       .
     </p>
     <p>
@@ -64,6 +75,17 @@ suite of tools for low-level operations
       {' '}
       <a href="https://github.com/bitcoinjs/bitcoinjs-lib">BitcoinJS (bitcoinjs-lib)</a>
 .
+    </p>
+    <p>
+      The Miniscript features are developed using code taken from
+      {' '}
+      <a href="http://bitcoin.sipa.be/miniscript/">http://bitcoin.sipa.be/miniscript/</a>
+      .
+      <br />
+      <small>
+        Miniscript was designed and implemented by Pieter Wuille, Andrew Poelstra, and Sanket
+        Kanjalkar.
+      </small>
     </p>
     <p>
       Feel free to

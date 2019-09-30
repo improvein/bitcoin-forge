@@ -6,6 +6,8 @@ This project intends to be an **offline** suite of tools for low-level operation
 
 The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github.com/bitcoinjs/bitcoinjs-lib).
 
+The Miniscript features are developed using code taken from http://bitcoin.sipa.be/miniscript/ (designed and implemented by Pieter Wuille, Andrew Poelstra, and Sanket Kanjalkar).
+
 The front-end is developed mainly using [React](https://reactjs.org), [Bootstrap](https://getbootstrap.com) and [other libraries](https://github.com/improvein/bitcoin-forge/blob/master/package.json)
 
 ## Features
@@ -18,6 +20,7 @@ Some things that can be done with this toolkit:
 * Scripts
   * Decompile the script ASM given the raw hexa notation
   * Create a script manually by adding values or OPCODES to the stack
+  * Create a script using the [Miniscript](http://bitcoin.sipa.be/miniscript/) notation
 
 ## Web version
 You can use the already compiled version at https://improvein.github.io/bitcoin-forge/
