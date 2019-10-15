@@ -15,24 +15,68 @@ class CreateMiniscriptScreen extends Component {
       miniscript: '',
       opcodeScript: '',
       spendingCost: '',
+      parsedAsm: '',
+      compiledScript: '',
+      replacements: [],
+      newReplacementName: '',
+      newReplacementValue: '',
+      replacementsErrorMessage: '',
       errorMessage: '',
     };
 
     this.onCompileClick = this.onCompileClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onAddReplacementClick = this.onAddReplacementClick.bind(this);
+    this.onRemoveReplacementClick = this.onRemoveReplacementClick.bind(this);
     this.compilePolicy = this.compilePolicy.bind(this);
   }
 
   onCompileClick() {
-    const { policy } = this.state;
-    this.compilePolicy(policy);
+    const { policy, replacements } = this.state;
+    this.compilePolicy(policy, replacements);
   }
 
   onInputChange(event) {
     this.setState({ [event.target.id]: event.target.value });
   }
 
-  compilePolicy(src) {
+  onAddReplacementClick() {
+    const { replacements, newReplacementName, newReplacementValue } = this.state;
+
+    if (!newReplacementName || !newReplacementValue) {
+      this.setState({
+        replacementsErrorMessage: 'You need enter a name and a value for the key',
+      });
+      return;
+    }
+
+    if (replacements.some(replacement => replacement.name === newReplacementName)) {
+      this.setState({
+        replacementsErrorMessage: 'There is already a key with that name',
+      });
+      return;
+    }
+
+    const newReplacements = replacements;
+    newReplacements.push({ name: newReplacementName, value: newReplacementValue });
+
+    this.setState({
+      replacements: newReplacements,
+      newReplacementName: '',
+      newReplacementValue: '',
+      replacementsErrorMessage: '',
+    });
+  }
+
+  onRemoveReplacementClick(replacementName) {
+    const { replacements } = this.state;
+    const newReplacements = replacements.filter(
+      replacement => replacement.name !== replacementName,
+    );
+    this.setState({ replacements: newReplacements });
+  }
+
+  compilePolicy(src, replacements) {
     try {
       const msout = Module._malloc(10000);
       const costout = Module._malloc(500);
@@ -45,8 +89,23 @@ class CreateMiniscriptScreen extends Component {
         spendingCost: Module.UTF8ToString(costout),
       };
 
-      const compiledScript = ScriptService.compileScriptFromString(newState.opcodeScript);
-      newState.compiledScript = compiledScript.toString('hex');
+      try {
+        // convert the array of replacements to the object
+        const tokenReplacements = {};
+        for (let r = 0; r < replacements.length; r += 1) {
+          tokenReplacements[replacements[r].name] = replacements[r].value;
+        }
+        const compiledResult = ScriptService.compileScriptFromString(
+          newState.opcodeScript,
+          tokenReplacements,
+        );
+        newState.parsedAsm = compiledResult.parsedAsm;
+        newState.compiledScript = compiledResult.script.toString('hex');
+
+        newState.errorMessage = '';
+      } catch (compileError) {
+        newState.errorMessage = `Cannot compile final script. ${compileError.message}`;
+      }
 
       this.setState(newState, () => {
         Module._free(msout);
@@ -67,7 +126,12 @@ class CreateMiniscriptScreen extends Component {
       miniscript,
       opcodeScript,
       spendingCost,
+      parsedAsm,
       compiledScript,
+      replacements,
+      newReplacementName,
+      newReplacementValue,
+      replacementsErrorMessage,
       errorMessage,
     } = this.state;
 
@@ -90,29 +154,104 @@ class CreateMiniscriptScreen extends Component {
               value={policy}
               onChange={this.onInputChange}
             />
+            <p className="small">
+              In the table below, enter the keys names used in the above policy, with the
+              corresponding value.
+            </p>
+            <table className="table table-sm">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  <td>&nbsp;</td>
+                </tr>
+              </thead>
+              <tbody>
+                {replacements.map(replacement => (
+                  <tr key={replacement.name}>
+                    <td>
+                      <code>{replacement.name}</code>
+                    </td>
+                    <td>
+                      <code className="text-break">{replacement.value}</code>
+                    </td>
+                    <td>
+                      <Button
+                        btnClass="danger"
+                        size="sm"
+                        onClick={() => this.onRemoveReplacementClick(replacement.name)}
+                      >
+                        <FontAwesomeIcon icon="minus-circle" className="mr-1" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      id="newReplacementName"
+                      name="replacement-name"
+                      className="form-control form-control-sm"
+                      onChange={this.onInputChange}
+                      value={newReplacementName}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      id="newReplacementValue"
+                      name="replacement-value"
+                      className="form-control form-control-sm"
+                      onChange={this.onInputChange}
+                      value={newReplacementValue}
+                    />
+                  </td>
+                  <td>
+                    <Button
+                      btnClass="primary"
+                      size="sm"
+                      onClick={this.onAddReplacementClick}
+                      title="Add new key"
+                    >
+                      <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="text-warning">{replacementsErrorMessage}</p>
+
             <Button btnClass="primary" onClick={this.onCompileClick}>
               <FontAwesomeIcon icon="cogs" className="mr-2" />
               Compile
             </Button>
             <hr />
-            <p className="text-danger">{errorMessage}</p>
-            <div className="form-group">
-              <label>Miniscript</label>
-              <p className="form-control-plaintext">
-                <code className="">{miniscript}</code>
-              </p>
-            </div>
-            <div className="form-group">
-              <label>Spending cost</label>
-              <div dangerouslySetInnerHTML={{ __html: spendingCost }} />
-            </div>
-            <div className="form-group">
-              <label>Opcode script</label>
-              <p className="text-console form-control-plaintext">{opcodeScript}</p>
-            </div>
-            <div className="form-group">
-              <label>Result raw script (hex)</label>
-              <code>{compiledScript}</code>
+            <div>
+              <p className="text-danger">{errorMessage}</p>
+              <div className="form-group">
+                <label>Miniscript</label>
+                <p className="form-control-plaintext">
+                  <code className="">{miniscript}</code>
+                </p>
+              </div>
+              <div className="form-group">
+                <label>Spending cost</label>
+                <div dangerouslySetInnerHTML={{ __html: spendingCost }} />
+              </div>
+              <div className="form-group">
+                <label>Opcode script</label>
+                <p className="text-console form-control-plaintext">{opcodeScript}</p>
+                <p className="text-console form-control-plaintext">
+                  <code>{parsedAsm}</code>
+                </p>
+              </div>
+              <div className="form-group">
+                <label>Result raw script (hex)</label>
+                <p className=" form-control-plaintext">
+                  <code>{compiledScript}</code>
+                </p>
+              </div>
             </div>
           </div>
 
@@ -123,7 +262,11 @@ class CreateMiniscriptScreen extends Component {
               </div>
               <div className="card-body">
                 <div className="card-text small">
-                  Supported policies:
+                  <p>
+                    For now, Miniscript is really only designed for P2WSH and P2SH-P2WSH embedded
+                    scripts
+                  </p>
+                  <p>Supported policies:</p>
                   <ul>
                     <li>
                       <samp>

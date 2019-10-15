@@ -6,6 +6,7 @@ import {
   faArrowRight,
   faCogs,
   faExclamationTriangle,
+  faMinusCircle,
   faPlusCircle,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +28,7 @@ import './scss/main.scss';
 import projectPackage from '../../package.json';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faPlusCircle, faTrash);
+library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faMinusCircle, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/bitcoin-forge">
