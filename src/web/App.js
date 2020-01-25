@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
@@ -31,7 +31,7 @@ import projectPackage from '../../package.json';
 library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faMinusCircle, faPlusCircle, faTrash);
 
 const App = () => (
-  <Router basename="/bitcoin-forge">
+  <Router basename="/">
     <>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <Link className="navbar-brand" to="/">
