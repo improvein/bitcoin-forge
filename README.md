@@ -22,10 +22,12 @@ Some things that can be done with this toolkit:
   * Create a script manually by adding values or OPCODES to the stack
   * Create a script using the [Miniscript](http://bitcoin.sipa.be/miniscript/) notation
 
-## Web version
+## Web (online) version
 You can use the already compiled version at https://improvein.github.io/bitcoin-forge/
 
 Even if that version is published online, it should work offline without issues.
+
+The online version does not have any analytics tool that tracks trafic, except of what GitHub might do on the server side.
 
 ## Local version
 The project should run locally without internet connection. That is why you can run the local version with the files under the [dist](https://github.com/improvein/bitcoin-forge/tree/master/dist) folder
