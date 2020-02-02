@@ -6,7 +6,10 @@ import {
   faArrowRight,
   faCogs,
   faExclamationTriangle,
+  faMinus,
   faMinusCircle,
+  faPlay,
+  faPlus,
   faPlusCircle,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +23,7 @@ import CreateAddressScreen from './address/CreateAddressScreen';
 import DecompileASMScreen from './script/DecompileASMScreen';
 import CreateScriptScreen from './script/CreateScriptScreen';
 import CreateMiniscriptScreen from './script/CreateMiniscriptScreen';
+import NodeScreen from './node/NodeScreen';
 
 import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
@@ -28,7 +32,19 @@ import './scss/main.scss';
 import projectPackage from '../../package.json';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faMinusCircle, faPlusCircle, faTrash);
+library.add(
+  faArrowLeft,
+  faArrowRight,
+  faExclamationTriangle,
+  faCogs,
+  faGithub,
+  faMinus,
+  faMinusCircle,
+  faPlay,
+  faPlus,
+  faPlusCircle,
+  faTrash,
+);
 
 const App = () => (
   <Router basename="/">
@@ -44,8 +60,7 @@ const App = () => (
           data-target="#navbarCollapse"
           aria-controls="navbarCollapse"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
@@ -58,8 +73,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Transactions
               </a>
               <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
@@ -79,8 +93,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Address
               </a>
               <div className="dropdown-menu" aria-labelledby="address-dropdown">
@@ -97,8 +110,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Scripts
               </a>
               <div className="dropdown-menu" aria-labelledby="scripts-dropdown">
@@ -113,14 +125,27 @@ const App = () => (
                 </Link>
               </div>
             </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="node-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                Node
+              </a>
+              <div className="dropdown-menu" aria-labelledby="node-dropdown">
+                <Link className="dropdown-item" to="/node/commands">
+                  Node Commands
+                </Link>
+              </div>
+            </li>
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a
-                className="nav-link"
-                href="https://github.com/improvein/bitcoin-forge"
-                title="GitHub repo"
-              >
+              <a className="nav-link" href="https://github.com/improvein/bitcoin-forge" title="GitHub repo">
                 <FontAwesomeIcon icon={['fab', 'github']} />
               </a>
             </li>
@@ -136,15 +161,14 @@ const App = () => (
           <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
           <Route path="/script/create" component={() => <CreateScriptScreen />} />
           <Route path="/script/create-miniscript" component={() => <CreateMiniscriptScreen />} />
+          <Route path="/node/commands" component={() => <NodeScreen />} />
         </div>
       </main>
       <footer className="footer mt-auto py-3">
         <div className="container">
           <span className="text-muted float-right">{`v${projectPackage.version}`}</span>
           <span className="text-muted">
-            The Bitcoin Forge is developed with ❤️+💻 by
-            {' '}
-            <a href="https://www.improvein.com">Improve-in</a>
+            The Bitcoin Forge is developed with ❤️+💻 by <a href="https://www.improvein.com">Improve-in</a>
           </span>
         </div>
       </footer>
