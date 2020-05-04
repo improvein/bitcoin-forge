@@ -31,7 +31,7 @@ class HexInput extends Component {
   }
 
   render() {
-    const { id, size } = this.props;
+    const { id, size, value: valueProps, readOnly } = this.props;
     const { value, errorMessage } = this.state;
 
     return (
@@ -43,7 +43,8 @@ class HexInput extends Component {
           type="text"
           className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}
           id={id}
-          value={value}
+          value={valueProps ? valueProps : value}
+          readOnly={readOnly}
           onChange={this.onInputChange}
         />
         {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
@@ -56,11 +57,13 @@ HexInput.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  readOnly: PropTypes.bool,
   onChange: PropTypes.func,
 };
 HexInput.defaultProps = {
   value: '',
   size: 'md',
+  readOnly: false,
   onChange: () => {},
 };
 

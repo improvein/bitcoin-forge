@@ -20,6 +20,7 @@ import CreateAddressScreen from './address/CreateAddressScreen';
 import DecompileASMScreen from './script/DecompileASMScreen';
 import CreateScriptScreen from './script/CreateScriptScreen';
 import CreateMiniscriptScreen from './script/CreateMiniscriptScreen';
+import HashScreen from './cryptography/HashScreen';
 
 import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
@@ -113,6 +114,24 @@ const App = () => (
                 </Link>
               </div>
             </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="cryptography-dropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Cryptography
+              </a>
+              <div className="dropdown-menu" aria-labelledby="cryptography-dropdown">
+                <Link className="dropdown-item" to="/cryptography/hash">
+                  Hash
+                </Link>
+              </div>
+            </li>
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
@@ -130,12 +149,17 @@ const App = () => (
       <main className="flex-shrink-0 pb-3" role="main">
         <div className="container">
           <Route path="/" exact component={() => <HomeScreen />} />
+          {/* Transactions */}
           <Route path="/tx/decode" component={() => <DecodeTxScreen />} />
           <Route path="/tx/forge" component={() => <CreateTxScreen />} />
+          {/* Address */}
           <Route path="/address/create" component={() => <CreateAddressScreen />} />
+          {/* Scripting */}
           <Route path="/script/decompile-asm" component={() => <DecompileASMScreen />} />
           <Route path="/script/create" component={() => <CreateScriptScreen />} />
           <Route path="/script/create-miniscript" component={() => <CreateMiniscriptScreen />} />
+          {/* Cryptography */}
+          <Route path="/cryptography/hash" component={() => <HashScreen />} />
         </div>
       </main>
       <footer className="footer mt-auto py-3">
