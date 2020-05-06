@@ -3,18 +3,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import cryptoService from '../../service/cryptography';
 
-import { HexInputField } from '../components';
+import { HexInputField, SelectInputField } from '../components';
 
 class HashScreen extends Component {
   constructor() {
     super();
     this.state = {
+      inputFormat: 'utf8',
       hashContent: '',
       hashResult: {},
       errorMessage: '',
     };
 
     this.onHashContentChange = this.onHashContentChange.bind(this);
+    this.onInputFormatChange = this.onInputFormatChange.bind(this);
+    this.doHash = this.doHash.bind(this);
+  }
+
+  onInputFormatChange(event) {
+    const inputFormat = event.target.value;
+
+    const { hashContent } = this.state;
+
+    this.doHash(inputFormat, hashContent);
   }
 
   onHashContentChange(event) {
@@ -29,11 +40,32 @@ class HashScreen extends Component {
       return;
     }
 
+    const { inputFormat } = this.state;
+
+    this.doHash(inputFormat, hashContent);
+  }
+
+  /**
+   * Hash the content entered by the user with the different algos
+   * @param {string} inputFormat
+   * @param {string} hashContent
+   */
+  doHash(inputFormat, hashContent) {
     try {
+      // check if content has valid input format
+      if (inputFormat === 'hex') {
+        if (!/^[0-9a-fA-F]*$/g.test(hashContent)) {
+          const formatError = new Error(`The content is not in the correct format: ${inputFormat}`);
+          throw formatError;
+        }
+      }
+
       const algos = ['sha1', 'sha256', 'ripemd160', 'hash160'];
-      const hashResult = cryptoService.hash(algos, hashContent);
+      const hashContentBuffer = Buffer.from(hashContent, inputFormat);
+      const hashResult = cryptoService.hash(algos, hashContentBuffer);
 
       this.setState({
+        inputFormat,
         hashContent,
         hashResult,
         errorMessage: '',
@@ -41,14 +73,21 @@ class HashScreen extends Component {
     } catch (err) {
       console.error('Hashing content', err);
       this.setState({
+        inputFormat,
         hashContent,
+        hashResult: {},
         errorMessage: err.message,
       });
     }
   }
 
   render() {
-    const { hashResult, errorMessage } = this.state;
+    const { hashResult, inputFormat, errorMessage } = this.state;
+
+    const inputFormats = [
+      { value: 'utf8', text: 'Text (UTF-8)' },
+      { value: 'hex', text: 'Hexadecimal' },
+    ];
 
     return (
       <div>
@@ -69,6 +108,14 @@ class HashScreen extends Component {
               <label htmlFor="txhexa">Text content to be hashed</label>
               <textarea id="hashcontent" name="hashcontent" className="form-control" rows="5" onChange={this.onHashContentChange} />
             </div>
+            <SelectInputField
+              id="input-format"
+              label="Content format"
+              horizontal={true}
+              choices={inputFormats}
+              value={inputFormat}
+              onChange={this.onInputFormatChange}
+            />
           </div>
         </form>
         <div className="card mt-3">
