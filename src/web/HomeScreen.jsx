@@ -47,6 +47,13 @@ suite of tools for low-level operations
           </li>
         </ul>
       </li>
+      <li>
+        Cryptography
+        <ul>
+          <li>Hash a message or a binary content (in hex) with different algorithms</li>
+          <li>Generate private and public keys using ECDSA. Sign content.</li>
+        </ul>
+      </li>
     </ul>
     <p>
       This toolkit can run 100% offline, since everyting is executed on the browser once it's

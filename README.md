@@ -21,6 +21,9 @@ Some things that can be done with this toolkit:
   * Decompile the script ASM given the raw hexa notation
   * Create a script manually by adding values or OPCODES to the stack
   * Create a script using the [Miniscript](http://bitcoin.sipa.be/miniscript/) notation
+* Cryptography
+  * Hash a message or a binary content (in hex) with different algorithms
+  * Generate private and public keys using ECDSA. Sign content.
 
 ## Web (online) version
 You can use the already compiled version at https://improvein.github.io/bitcoin-forge/
