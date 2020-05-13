@@ -37,6 +37,55 @@ const hash = (algos, content) => {
   return hashResultMap;
 };
 
+/**
+ * Generates a Elliptic Curve key pair (ECPair)
+ * @param {string|Buffer} privateKey Private key (optional)
+ * @returns {bitcoin.ECPair}
+ */
+const generateECPair = (privateKey) => {
+  let ecPair = null;
+  if (privateKey) {
+    let privateKeyBuffer = privateKey;
+    if (!Buffer.isBuffer(privateKey)) {
+      privateKeyBuffer = Buffer.from(privateKey, 'hex');
+    }
+    ecPair = bitcoin.ECPair.fromPrivateKey(privateKeyBuffer);
+  } else {
+    ecPair = bitcoin.ECPair.makeRandom();
+  }
+
+  return ecPair;
+};
+
+/**
+ * Sign a content
+ * @param {Buffer} content Content to sign
+ * @param {string} hashAlgo Hashing algorithm (sha256, sha1, )
+ * @param {bitcoin.ECPair} ecPair
+ */
+const signContent = (content, hashAlgo, ecPair) => {
+  let contentHashedBuffer = Buffer.alloc(32);
+  switch (hashAlgo) {
+    case 'sha1':
+      contentHashedBuffer = bitcoin.crypto.sha1(content);
+      break;
+    case 'ripemd160':
+      contentHashedBuffer = bitcoin.crypto.ripemd160(content);
+      break;
+    case 'hash160':
+      contentHashedBuffer = bitcoin.crypto.hash160(content);
+      break;
+    case 'sha256':
+    default:
+      contentHashedBuffer = bitcoin.crypto.sha256(content);
+  }
+
+  const signature = ecPair.sign(contentHashedBuffer);
+  return signature;
+};
+
 export default {
   hash,
+  generateECPair,
+  signContent,
 };

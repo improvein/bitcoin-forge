@@ -21,6 +21,7 @@ import DecompileASMScreen from './script/DecompileASMScreen';
 import CreateScriptScreen from './script/CreateScriptScreen';
 import CreateMiniscriptScreen from './script/CreateMiniscriptScreen';
 import HashScreen from './cryptography/HashScreen';
+import KeysScreen from './cryptography/KeysScreen';
 
 import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
@@ -130,6 +131,9 @@ const App = () => (
                 <Link className="dropdown-item" to="/cryptography/hash">
                   Hash
                 </Link>
+                <Link className="dropdown-item" to="/cryptography/keys">
+                  Keys
+                </Link>
               </div>
             </li>
           </ul>
@@ -160,6 +164,7 @@ const App = () => (
           <Route path="/script/create-miniscript" component={() => <CreateMiniscriptScreen />} />
           {/* Cryptography */}
           <Route path="/cryptography/hash" component={() => <HashScreen />} />
+          <Route path="/cryptography/keys" component={() => <KeysScreen />} />
         </div>
       </main>
       <footer className="footer mt-auto py-3">
