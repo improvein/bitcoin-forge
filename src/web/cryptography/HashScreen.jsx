@@ -105,7 +105,7 @@ class HashScreen extends Component {
         <form id="decodetx-form" className="">
           <div className="">
             <div className="form-group">
-              <label htmlFor="txhexa">Text content to be hashed</label>
+              <label htmlFor="txhexa">Content to be hashed</label>
               <textarea id="hashcontent" name="hashcontent" className="form-control" rows="5" onChange={this.onHashContentChange} />
             </div>
             <SelectInputField
