@@ -42,16 +42,18 @@ const hash = (algos, content) => {
  * @param {string|Buffer} privateKey Private key (optional)
  * @returns {bitcoin.ECPair}
  */
-const generateECPair = (privateKey) => {
+const generateECPair = (privateKey, compressed) => {
   let ecPair = null;
+  const ecOptions = { compressed };
+
   if (privateKey) {
     let privateKeyBuffer = privateKey;
     if (!Buffer.isBuffer(privateKey)) {
       privateKeyBuffer = Buffer.from(privateKey, 'hex');
     }
-    ecPair = bitcoin.ECPair.fromPrivateKey(privateKeyBuffer);
+    ecPair = bitcoin.ECPair.fromPrivateKey(privateKeyBuffer, ecOptions);
   } else {
-    ecPair = bitcoin.ECPair.makeRandom();
+    ecPair = bitcoin.ECPair.makeRandom(ecOptions);
   }
 
   return ecPair;

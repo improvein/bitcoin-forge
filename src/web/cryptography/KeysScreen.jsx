@@ -10,6 +10,7 @@ class KeysScreen extends Component {
     super();
     this.state = {
       privateKey: '',
+      keyCompressed: false,
       ecPair: null,
       genKeyErrorMessage: '',
       signContent: '',
@@ -18,6 +19,7 @@ class KeysScreen extends Component {
     };
 
     this.onPrivateKeyChange = this.onPrivateKeyChange.bind(this);
+    this.onKeyCompressedChange = this.onKeyCompressedChange.bind(this);
     this.onSignContentChange = this.onSignContentChange.bind(this);
     this.onGeneratePubClick = this.onGeneratePubClick.bind(this);
     this.onGenerateRandomClick = this.onGenerateRandomClick.bind(this);
@@ -31,6 +33,14 @@ class KeysScreen extends Component {
 
     this.setState({
       privateKey,
+    });
+  }
+
+  onKeyCompressedChange(event) {
+    const keyCompressed = event.target.checked;
+
+    this.setState({
+      keyCompressed,
     });
   }
 
@@ -56,22 +66,9 @@ class KeysScreen extends Component {
   }
 
   onGenerateRandomClick(event) {
-    try {
-      const ecPair = cryptoService.generateECPair();
+    const { keyCompressed } = this.state;
 
-      this.setState({
-        privateKey: ecPair.privateKey.toString('hex'),
-        ecPair,
-        genKeyErrorMessage: '',
-      });
-    } catch (err) {
-      console.error('Generating random keys', err);
-      this.setState({
-        privateKey,
-        ecPair: null,
-        genKeyErrorMessage: err.message,
-      });
-    }
+    this.generatePublicKey();
   }
 
   onSignClick(event) {
@@ -107,16 +104,17 @@ class KeysScreen extends Component {
    * @param {string} privateKey
    */
   generatePublicKey(privateKey) {
+    const { keyCompressed } = this.state;
     try {
-      const ecPair = cryptoService.generateECPair(privateKey);
+      const ecPair = cryptoService.generateECPair(privateKey, keyCompressed);
 
       this.setState({
-        privateKey,
+        privateKey: ecPair.privateKey.toString('hex'),
         ecPair,
         genKeyErrorMessage: '',
       });
     } catch (err) {
-      console.error('Generating public key', err);
+      console.error('Generating keys', err);
       this.setState({
         privateKey,
         ecPair: null,
@@ -126,12 +124,12 @@ class KeysScreen extends Component {
   }
 
   render() {
-    const { ecPair, privateKey, genKeyErrorMessage, signContent, signature, signErrorMessage } = this.state;
+    const { ecPair, keyCompressed, privateKey, genKeyErrorMessage, signContent, signature, signErrorMessage } = this.state;
 
     return (
       <div>
         <h1>Keys and Signature</h1>
-        <p>Generate private and public keys using ECDSA. Test signatures.</p>
+        <p>Generate private and public keys using ECDSA (secp256k1). Test signatures.</p>
 
         <form id="keys-form" className="">
           <div className="">
@@ -145,15 +143,38 @@ class KeysScreen extends Component {
               </div>
             </div>
             <Button text="Generate Public Key (from private key)" btnClass="primary" onClick={this.onGeneratePubClick} />
+            <div className="form-check form-check-inline mx-2">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="key-compressed"
+                value={keyCompressed}
+                onChange={this.onKeyCompressedChange}
+              />
+              <label className="form-check-label" htmlFor="key-compressed">
+                Compressed
+              </label>
+            </div>
             {genKeyErrorMessage && <p className="text-danger">{genKeyErrorMessage}</p>}
-            <div>
-              <HexInputField id="result-pubkey" label="Public key" readOnly={true} value={ecPair ? ecPair.publicKey.toString('hex') : ''} />
+            <hr />
+            <h6>Public key</h6>
+            <div className="row">
+              <div className="col-sm-6">
+                <label>Hexadecimal</label>
+                <textarea className="form-control" rows="4" readOnly value={ecPair ? ecPair.publicKey.toString('hex') : ''} />
+              </div>
+              <div className="col-sm-6">
+                <label>Base64</label>
+                <textarea className="form-control" rows="4" readOnly value={ecPair ? ecPair.publicKey.toString('base64') : ''} />
+              </div>
             </div>
           </div>
         </form>
         <div className="card mt-3">
           <div className="card-body">
-            <h5 className="card-title">Signatures (BETA)</h5>
+            <h5 className="card-title">
+              Signatures <span className="badge badge-warning">(BETA)</span>
+            </h5>
 
             <div className="form-group">
               <label htmlFor="txhexa">Text content to be signed</label>
@@ -168,8 +189,19 @@ class KeysScreen extends Component {
             </div>
             <Button text="Sign" btnClass="primary" onClick={this.onSignClick} />
             {signErrorMessage && <p className="text-danger">{signErrorMessage}</p>}
-            <div className="mt-1">
-              <HexInputField id="result-sign" label="Signature (of content hashed with SHA-256)" readOnly={true} value={signature ? signature.toString('hex') : ''} />
+            <hr />
+            <div>
+              <h6>Signature (of content hashed with SHA-256)</h6>
+              <div className="row">
+                <div className="col-sm-6">
+                  <label>Hexadecimal</label>
+                  <textarea className="form-control" rows="4" readOnly value={signature ? signature.toString('hex') : ''} />
+                </div>
+                <div className="col-sm-6">
+                  <label>Base64</label>
+                  <textarea className="form-control" rows="4" readOnly value={signature ? signature.toString('base64') : ''} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
