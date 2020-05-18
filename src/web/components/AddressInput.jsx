@@ -16,7 +16,7 @@ class AddressInput extends Component {
     const { value } = event.target;
     // validate if base58 or bech32
     if (
-      /^[1-35m][123456789ABCDEFGHJKLMNPQRSTUVWXYzabcdefghijkmnopqrstuvwxyz]+$/g.test(value)
+      /^[1-35m][123456789ABCDEFGHJKLMNPQRSTUVWXYZzabcdefghijkmnopqrstuvwxyz]+$/g.test(value)
       || /^(bc|tb)([0-9]|1[0-6])[23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz]+$/g.test(
         value,
       )
