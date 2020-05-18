@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
-import {
-  AmountInputField, HexInputField, B58InputField, SelectInputField,
-} from '../components';
+import { AmountInputField, HexInputField, B58InputField, SelectInputField } from '../components';
 import { TxInput } from '../../model';
 import * as Constants from '../../model/Constants';
 
@@ -33,9 +31,7 @@ class TxInputForm extends Component {
 
     this.setState({ [event.target.id]: fieldValue }, () => {
       // get the properties and generate a TxInput object
-      const {
-        index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type,
-      } = this.state;
+      const { index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type } = this.state;
       const txInput = new TxInput({
         index: parseInt(index, 10),
         prevTxHash,
@@ -52,16 +48,11 @@ class TxInputForm extends Component {
   }
 
   render() {
-    const {
-      index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type,
-    } = this.state;
+    const { index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type } = this.state;
 
-    const availableInputTypes = Constants.AddressTypes.filter(addrType => [
-      Constants.ADDRTYPE_P2PKH,
-      Constants.ADDRTYPE_P2SH,
-      Constants.ADDRTYPE_P2WPKH,
-      Constants.ADDRTYPE_P2SH_P2WPKH,
-    ].includes(addrType));
+    const availableInputTypes = Constants.AddressTypes.filter((addrType) =>
+      [Constants.ADDRTYPE_P2PKH, Constants.ADDRTYPE_P2SH, Constants.ADDRTYPE_P2WPKH, Constants.ADDRTYPE_P2SH_P2WPKH].includes(addrType),
+    );
 
     return (
       <div className="card mb-1">
@@ -69,14 +60,7 @@ class TxInputForm extends Component {
         <div className="card-body">
           <div>
             <h4 className="card-title">Previous UTXO</h4>
-            <HexInputField
-              label="TX Hash"
-              id="prevTxHash"
-              horizontal
-              size="sm"
-              value={prevTxHash}
-              handleChange={this.onFieldChange}
-            />
+            <HexInputField label="TX Hash" id="prevTxHash" horizontal size="sm" value={prevTxHash} handleChange={this.onFieldChange} />
             <InputField
               label="Index"
               type="number"
@@ -93,20 +77,13 @@ class TxInputForm extends Component {
               size="sm"
               horizontal
               value={type}
-              choices={availableInputTypes.map(addrType => ({
+              choices={availableInputTypes.map((addrType) => ({
                 text: addrType,
                 value: addrType,
               }))}
               handleChange={this.onFieldChange}
             />
-            <AmountInputField
-              label="Amount"
-              id="amount"
-              horizontal
-              size="sm"
-              value={amount}
-              handleChange={this.onFieldChange}
-            />
+            <AmountInputField label="Amount" id="amount" horizontal size="sm" value={amount} handleChange={this.onFieldChange} />
           </div>
           <hr />
           {type === Constants.ADDRTYPE_P2SH && (
@@ -121,15 +98,8 @@ class TxInputForm extends Component {
             />
           )}
 
-          {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH) && (
-            <B58InputField
-              label="Private key"
-              id="privateKey"
-              horizontal
-              size="sm"
-              value={privateKey}
-              handleChange={this.onFieldChange}
-            />
+          {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH || type === Constants.ADDRTYPE_P2SH_P2WPKH) && (
+            <B58InputField label="Private key" id="privateKey" horizontal size="sm" value={privateKey} handleChange={this.onFieldChange} />
           )}
         </div>
       </div>

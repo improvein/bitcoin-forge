@@ -57,15 +57,22 @@ const TxService = {
     // add the outputs
     console.log('Add the outputs.');
     outputs.forEach((output) => {
-      // check required properties
-      if (!Object.prototype.hasOwnProperty.call(output, 'address')) {
-        throw new Error('The address for the output was not found.');
-      }
-      if (!Object.prototype.hasOwnProperty.call(output, 'amount')) {
-        throw new Error('The amount for the output was not found.');
-      }
+      // depending on the type of outputs, it's different
+      if (output.type !== Constants.TXOUTPUT_OPRETURN) {
+        const data = Buffer.from(output.data, 'hex');
+        const embed = bitcoin.payments.embed({ data: [data] });
+        txb.addOutput(embed.output, 0);
+      } else {
+        // check required properties
+        if (!Object.prototype.hasOwnProperty.call(output, 'address')) {
+          throw new Error('The address for the output was not found.');
+        }
+        if (!Object.prototype.hasOwnProperty.call(output, 'amount')) {
+          throw new Error('The amount for the output was not found.');
+        }
 
-      txb.addOutput(output.address, output.amount);
+        txb.addOutput(output.address, output.amount);
+      }
     });
 
     // Now that the base transaction structure is created
@@ -75,13 +82,7 @@ const TxService = {
     console.log('Sign the inputs.');
     inputs.forEach((input, i) => {
       // only for INPUTS that require signing
-      if (
-        ![
-          Constants.ADDRTYPE_P2PKH,
-          Constants.ADDRTYPE_P2WPKH,
-          Constants.ADDRTYPE_P2SH_P2WPKH,
-        ].includes(input.type)
-      ) {
+      if (![Constants.ADDRTYPE_P2PKH, Constants.ADDRTYPE_P2WPKH, Constants.ADDRTYPE_P2SH_P2WPKH].includes(input.type)) {
         return;
       }
 

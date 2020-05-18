@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import TxInputForm from './TxInputForm';
 import TxOutputForm from './TxOutputForm';
 import { TxInput, TxOutput } from '../../model';
+import * as Constants from '../../model/Constants';
 
 class CreateTxScreen extends Component {
   constructor() {
@@ -17,6 +18,7 @@ class CreateTxScreen extends Component {
       outputs: [],
       tx: null,
       errorMessage: '',
+      outputsOpReturn: 0,
     };
 
     txService.setTestnet(true);
@@ -25,6 +27,7 @@ class CreateTxScreen extends Component {
     this.onAddInput = this.onAddInput.bind(this);
     this.onUpdateInput = this.onUpdateInput.bind(this);
     this.onAddOutput = this.onAddOutput.bind(this);
+    this.onAddOpReturn = this.onAddOpReturn.bind(this);
     this.onUpdateOutput = this.onUpdateOutput.bind(this);
     this.submit = this.submit.bind(this);
   }
@@ -44,10 +47,7 @@ class CreateTxScreen extends Component {
     // get the last index used
     let lastIndex = 0;
     if (inputs.length > 0) {
-      lastIndex = inputs.reduce(
-        (acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index),
-        inputs[0],
-      );
+      lastIndex = inputs.reduce((acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index), inputs[0]);
     }
 
     const txInput = new TxInput({ index: lastIndex + 1 });
@@ -61,7 +61,7 @@ class CreateTxScreen extends Component {
   onUpdateInput(txInput) {
     const { inputs } = this.state;
     // find the input to update
-    const arrayPos = inputs.findIndex(input => input.index === txInput.index);
+    const arrayPos = inputs.findIndex((input) => input.index === txInput.index);
     // now replace the old TxInput with the new one
     inputs.splice(arrayPos, 1, txInput);
 
@@ -75,13 +75,10 @@ class CreateTxScreen extends Component {
     // get the last index used
     let lastIndex = 0;
     if (outputs.length > 0) {
-      lastIndex = outputs.reduce(
-        (acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index),
-        outputs[0],
-      );
+      lastIndex = outputs.reduce((acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index), outputs[0]);
     }
 
-    const txOutput = new TxOutput(lastIndex + 1);
+    const txOutput = new TxOutput(Constants.TXOUTPUT_STANDARD, lastIndex + 1);
     outputs.push(txOutput);
 
     this.setState({
@@ -89,10 +86,28 @@ class CreateTxScreen extends Component {
     });
   }
 
+  onAddOpReturn() {
+    const { outputs, outputsOpReturn } = this.state;
+
+    // get the last index used
+    let lastIndex = 0;
+    if (outputs.length > 0) {
+      lastIndex = outputs.reduce((acc, currentValue) => (currentValue >= acc.index ? currentValue : acc.index), outputs[0]);
+    }
+
+    const txOutput = new TxOutput(Constants.TXOUTPUT_OPRETURN, lastIndex + 1);
+    outputs.push(txOutput);
+
+    this.setState({
+      outputs,
+      outputsOpReturn: outputsOpReturn + 1,
+    });
+  }
+
   onUpdateOutput(txOutput) {
     const { outputs } = this.state;
     // find the input to update
-    const arrayPos = outputs.findIndex(output => output.index === txOutput.index);
+    const arrayPos = outputs.findIndex((output) => output.index === txOutput.index);
     // now replace the old TxInput with the new one
     outputs.splice(arrayPos, 1, txOutput);
 
@@ -119,9 +134,7 @@ class CreateTxScreen extends Component {
   }
 
   render() {
-    const {
-      isTestnet, inputs, outputs, tx, errorMessage,
-    } = this.state;
+    const { isTestnet, inputs, outputs, tx, errorMessage, outputsOpReturn } = this.state;
     // calculate the estimated fee
     let estimatedFee = 0;
     inputs.forEach((input) => {
@@ -182,7 +195,7 @@ class CreateTxScreen extends Component {
               </div>
               Inputs
             </h2>
-            {inputs.map(input => (
+            {inputs.map((input) => (
               <TxInputForm key={input.index} item={input} onUpdate={this.onUpdateInput} />
             ))}
           </div>
@@ -196,10 +209,14 @@ class CreateTxScreen extends Component {
                   <FontAwesomeIcon icon="plus-circle" className="mr-1" />
                   Add new output
                 </Button>
+                <Button btnClass="primary" size="sm" onClick={this.onAddOpReturn} disabled={outputsOpReturn > 0}>
+                  <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                  Add OP_RETURN
+                </Button>
               </div>
               Outputs
             </h2>
-            {outputs.map(output => (
+            {outputs.map((output) => (
               <TxOutputForm key={output.index} item={output} onUpdate={this.onUpdateOutput} />
             ))}
             <div className="card bg-light mb-1">
@@ -234,11 +251,7 @@ class CreateTxScreen extends Component {
                   <dd className="col-sm-9">{`${tx.weight()} bytes`}</dd>
 
                   <dt className="col-sm-3">Miner fee</dt>
-                  <dd className="col-sm-9">
-                    {`${estimatedFee} sat (${Math.round(
-                      estimatedFee / tx.virtualSize(),
-                    )} sat/vbyte)`}
-                  </dd>
+                  <dd className="col-sm-9">{`${estimatedFee} sat (${Math.round(estimatedFee / tx.virtualSize())} sat/vbyte)`}</dd>
                 </dl>
                 <div className="form-group">
                   <label htmlFor="tx-hex">Hex</label>
