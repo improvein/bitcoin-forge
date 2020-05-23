@@ -278,14 +278,16 @@ class CreateTxScreen extends Component {
           <div className="col-sm">
             <h2>
               <div className="float-right">
-                <Button btnClass="primary" size="sm" onClick={this.onAddOutput}>
-                  <FontAwesomeIcon icon="plus-circle" className="mr-1" />
-                  Add new output
-                </Button>
-                <Button btnClass="primary" size="sm" onClick={this.onAddOpReturn} disabled={outputsOpReturn > 0}>
-                  <FontAwesomeIcon icon="plus-circle" className="mr-1" />
-                  Add OP_RETURN
-                </Button>
+                <div class="btn-group" role="group">
+                  <Button btnClass="primary" size="sm" onClick={this.onAddOutput}>
+                    <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                    Add new output
+                  </Button>
+                  <Button btnClass="primary" size="sm" onClick={this.onAddOpReturn} disabled={outputsOpReturn > 0}>
+                    <FontAwesomeIcon icon="plus-circle" className="mr-1" />
+                    Add OP_RETURN
+                  </Button>
+                </div>
               </div>
               Outputs
             </h2>
