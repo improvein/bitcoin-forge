@@ -278,7 +278,7 @@ class CreateTxScreen extends Component {
           <div className="col-sm">
             <h2>
               <div className="float-right">
-                <div class="btn-group" role="group">
+                <div className="btn-group" role="group">
                   <Button btnClass="primary" size="sm" onClick={this.onAddOutput}>
                     <FontAwesomeIcon icon="plus-circle" className="mr-1" />
                     Add new output
