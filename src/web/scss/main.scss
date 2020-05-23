@@ -1,12 +1,12 @@
-@import "variables";
-@import "~bootstrap/scss/bootstrap";
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
 
 .footer {
   background-color: #f5f5f5;
 }
 
 .text-console {
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .list-dnd {
@@ -25,5 +25,34 @@
   .card-body {
     overflow: auto;
     max-height: 13rem;
+  }
+}
+
+.btn-expandable {
+  width: 3em;
+  white-space: nowrap;
+  overflow-x: hidden;
+  transition: width 0.2s ease-out;
+  text-align: center;
+  span {
+    display: none;
+    white-space: nowrap;
+  }
+  &.btn-expandable-right {
+    text-align: right;
+    direction: rtl;
+  }
+
+  &:hover {
+    width: 7em;
+    span {
+      display: inline;
+    }
+    &.btn-expandable-right {
+      text-align: right;
+      span {
+        text-align: right;
+      }
+    }
   }
 }

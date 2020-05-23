@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
-import { AmountInputField, HexInputField, B58InputField, SelectInputField } from '../components';
+import { AmountInputField, HexInputField, B58InputField, ButtonExpandable, SelectInputField } from '../components';
 import { TxInput } from '../../model';
 import * as Constants from '../../model/Constants';
 
@@ -10,15 +10,16 @@ class TxInputForm extends Component {
     super(props);
 
     this.state = {
-      index: props.item.index,
+      index: parseInt(props.item.index, 10),
       prevTxHash: props.item.prevTxHash,
-      prevTxIndex: props.item.prevTxIndex,
+      prevTxIndex: parseInt(props.item.prevTxIndex, 10),
       privateKey: props.item.privateKey,
       redeemScript: props.item.redeemScript,
-      amount: props.item.amount,
+      amount: parseInt(props.item.amount, 10),
       type: props.item.type,
     };
     this.onFieldChange = this.onFieldChange.bind(this);
+    this.onRemoveClick = this.onRemoveClick.bind(this);
   }
 
   onFieldChange(event) {
@@ -29,22 +30,36 @@ class TxInputForm extends Component {
       fieldValue = parseInt(fieldValue, 10);
     }
 
-    this.setState({ [event.target.id]: fieldValue }, () => {
+    const stateProp = event.target.id.split('_')[0];
+
+    this.setState({ [stateProp]: fieldValue }, () => {
       // get the properties and generate a TxInput object
       const { index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type } = this.state;
       const txInput = new TxInput({
-        index: parseInt(index, 10),
+        index: index,
         prevTxHash,
-        prevTxIndex: parseInt(prevTxIndex, 10),
+        prevTxIndex: prevTxIndex,
         privateKey,
         redeemScript,
-        amount: parseInt(amount, 10),
+        amount: amount,
         type,
       });
       // fire the onUpdate event
       const { onUpdate } = this.props;
       onUpdate(txInput);
     });
+  }
+
+  onRemoveClick(event) {
+    if (confirm('Are you sure you want to remove this Input?')) {
+      const { index } = this.state;
+
+      // fire the onUpdate event
+      const { onRemove } = this.props;
+      if (onRemove) {
+        onRemove(index);
+      }
+    }
   }
 
   render() {
@@ -56,16 +71,34 @@ class TxInputForm extends Component {
 
     return (
       <div className="card mb-1">
-        <div className="card-header">{`Input #${index}`}</div>
+        <div className="card-header">
+          <ButtonExpandable
+            btnClass="danger"
+            size="sm"
+            className="float-right"
+            text="Remove"
+            align="right"
+            icon="trash"
+            onClick={this.onRemoveClick}
+          />
+          {`Input #${index}`}
+        </div>
         <div className="card-body">
           <div>
             <h4 className="card-title">Previous UTXO</h4>
-            <HexInputField label="TX Hash" id="prevTxHash" horizontal size="sm" value={prevTxHash} handleChange={this.onFieldChange} />
+            <HexInputField
+              label="TX Hash"
+              id={`prevTxHash_${index}`}
+              horizontal
+              size="sm"
+              value={prevTxHash}
+              handleChange={this.onFieldChange}
+            />
             <InputField
               label="Index"
               type="number"
               pattern="[0-9]*"
-              id="prevTxIndex"
+              id={`prevTxIndex_${index}`}
               horizontal
               size="sm"
               value={prevTxIndex}
@@ -73,7 +106,7 @@ class TxInputForm extends Component {
             />
             <SelectInputField
               label="Type"
-              id="type"
+              id={`type_${index}`}
               size="sm"
               horizontal
               value={type}
@@ -83,13 +116,13 @@ class TxInputForm extends Component {
               }))}
               handleChange={this.onFieldChange}
             />
-            <AmountInputField label="Amount" id="amount" horizontal size="sm" value={amount} handleChange={this.onFieldChange} />
+            <AmountInputField label="Amount" id={`amount_${index}`} horizontal size="sm" value={amount} handleChange={this.onFieldChange} />
           </div>
           <hr />
-          {type === Constants.ADDRTYPE_P2SH && (
+          {type === Constants.ADDRTYPE_P2SH || type === Constants.ADDRTYPE_P2WSH  && (
             <HexInputField
               label="Redeem script"
-              id="redeemScript"
+              id={`redeemScript_${index}`}
               horizontal
               size="sm"
               value={redeemScript}
@@ -99,7 +132,14 @@ class TxInputForm extends Component {
           )}
 
           {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH || type === Constants.ADDRTYPE_P2SH_P2WPKH) && (
-            <B58InputField label="Private key" id="privateKey" horizontal size="sm" value={privateKey} handleChange={this.onFieldChange} />
+            <B58InputField
+              label="Private key"
+              id={`privateKey_${index}`}
+              horizontal
+              size="sm"
+              value={privateKey}
+              handleChange={this.onFieldChange}
+            />
           )}
         </div>
       </div>
@@ -118,9 +158,11 @@ TxInputForm.propTypes = {
     type: PropTypes.oneOf(Constants.AddressTypes),
   }).isRequired,
   onUpdate: PropTypes.func,
+  onRemove: PropTypes.func,
 };
 TxInputForm.defaultProps = {
   onUpdate: () => {},
+  onRemove: () => {},
 };
 
 export default TxInputForm;
