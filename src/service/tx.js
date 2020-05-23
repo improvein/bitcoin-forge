@@ -58,7 +58,7 @@ const TxService = {
     console.log('Add the outputs.');
     outputs.forEach((output) => {
       // depending on the type of outputs, it's different
-      if (output.type !== Constants.TXOUTPUT_OPRETURN) {
+      if (output.type === Constants.TXOUTPUT_OPRETURN) {
         const data = Buffer.from(output.data, 'hex');
         const embed = bitcoin.payments.embed({ data: [data] });
         txb.addOutput(embed.output, 0);
