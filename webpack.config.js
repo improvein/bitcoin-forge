@@ -1,24 +1,24 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: path.resolve(__dirname, "src/web/index.js"),
-    serviceScript: path.resolve(__dirname, "src/service/script.js"),
-    serviceTx: path.resolve(__dirname, "src/service/tx.js"),
-    serviceAddress: path.resolve(__dirname, "src/service/address.js"),
+    main: path.resolve(__dirname, 'src/web/index.js'),
+    serviceScript: path.resolve(__dirname, 'src/service/script.js'),
+    serviceTx: path.resolve(__dirname, 'src/service/tx.js'),
+    serviceAddress: path.resolve(__dirname, 'src/service/address.js'),
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/bitcoin-forge/",
-    filename: "[name].[contenthash:8].js",
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/bitcoin-forge/',
+    filename: '[name].[contenthash:8].js',
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
     },
   },
   module: {
@@ -27,14 +27,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader',
           },
         ],
       },
@@ -45,19 +45,19 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader, // inject CSS to page
           },
           {
-            loader: "css-loader", // translates CSS into CommonJS modules
+            loader: 'css-loader', // translates CSS into CommonJS modules
           },
           {
-            loader: "postcss-loader", // Run postcss actions
+            loader: 'postcss-loader', // Run postcss actions
             options: {
               plugins() {
                 // postcss plugins, can be exported to postcss.config.js
-                return [require("autoprefixer")];
+                return [require('autoprefixer')];
               },
             },
           },
           {
-            loader: "sass-loader", // compiles Sass to CSS
+            loader: 'sass-loader', // compiles Sass to CSS
           },
         ],
       },
@@ -66,10 +66,10 @@ module.exports = {
         test: /\.(png|jp(e*)g|svg)$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
               limit: 8000, // Convert images < 8kb to base64 strings
-              name: "images/[hash]-[name].[ext]",
+              name: 'images/[hash]-[name].[ext]',
             },
           },
         ],
@@ -77,26 +77,28 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: ['*', '.js', '.jsx'],
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
-    publicPath: "/bitcoin-forge/",
-    openPage: "bitcoin-forge/",
+    contentBase: path.resolve(__dirname, 'dist'),
+    publicPath: '/bitcoin-forge/',
+    openPage: 'bitcoin-forge/',
     writeToDisk: true,
     historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ["dist"],
+      cleanAfterEveryBuildPatterns: ['dist'],
     }),
     new HtmlWebPackPlugin({
-      template: "src/web/index.html",
-      filename: "index.html",
+      template: 'src/web/index.html',
+      filename: 'index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: "bundle.css",
+      filename: 'bundle.css',
     }),
-    new CopyWebpackPlugin([{ from: "src/web/public" }]),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'src/web/public' }],
+    }),
   ],
 };
