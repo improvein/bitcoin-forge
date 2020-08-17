@@ -1,0 +1,44 @@
+[
+  {
+    "name": "BIP39 - Mnemonic Code",
+    "authors": [{ "name": "Ian Coleman", "url": "https://iancoleman.io" }],
+    "url": "https://iancoleman.io/bip39/",
+    "description": "Play around with the mnemonic, seeds, keys, etc according to BIP32, BIP39 and BIP44."
+  },
+  {
+    "name": "Bitcoin Core Config Generator",
+    "authors": [{ "name": "Jameson Lopp", "url": "https://www.lopp.net" }],
+    "url": "https://jlopp.github.io/bitcoin-core-config-generator/",
+    "description": "Web tool to easily generate the Bitcoin Core config file."
+  },
+  {
+    "name": "Bitcoin IDE",
+    "authors": [{ "name": "siminchen", "url": "https://github.com/siminchen" }],
+    "url": "https://siminchen.github.io/bitcoinIDE/build/editor.html",
+    "description": "Programming IDE for Bitcoin script."
+  },
+  {
+    "name": "Bitcoin Transaction Size Calculator",
+    "authors": [{ "name": "Jameson Lopp", "url": "https://www.lopp.net" }],
+    "url": "https://jlopp.github.io/bitcoin-transaction-size-calculator/",
+    "description": "This calculator will give you the upper bound of the size of a transaction with specific characteristics."
+  },
+  {
+    "name": "Miniscript",
+    "authors": [{ "name": "Pieter Wuille", "url": "https://github.com/sipa" }],
+    "url": "http://bitcoin.sipa.be/miniscript/",
+    "description": "Miniscript is a language for writing (a subset of) Bitcoin Scripts in a structured way, enabling analysis, composition, generic signing and more."
+  },
+  {
+    "name": "Minsc",
+    "authors": [{ "name": "Nadav Ivgi", "url": "https://github.com/shesek/" }],
+    "url": "https://min.sc/",
+    "description": "Minsc is a high-level scripting language for expressing Bitcoin Script spending conditions."
+  },
+  {
+    "name": "Shamir Secret Sharing Scheme",
+    "authors": [{ "name": "Ian Coleman", "url": "https://iancoleman.io" }],
+    "url": "https://iancoleman.io/shamir/",
+    "description": "A single page tool for splitting secrets into parts or recreating secrets from existing parts."
+  }
+]

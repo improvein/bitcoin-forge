@@ -22,6 +22,7 @@ import CreateScriptScreen from './script/CreateScriptScreen';
 import CreateMiniscriptScreen from './script/CreateMiniscriptScreen';
 import HashScreen from './cryptography/HashScreen';
 import KeysScreen from './cryptography/KeysScreen';
+import MoreToolsScreen from './tools/MoreToolsScreen';
 
 import bfLogo from './images/bf_logo.svg';
 import 'bootstrap';
@@ -46,8 +47,7 @@ const App = () => (
           data-target="#navbarCollapse"
           aria-controls="navbarCollapse"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
@@ -60,8 +60,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Transactions
               </a>
               <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
@@ -81,8 +80,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Address
               </a>
               <div className="dropdown-menu" aria-labelledby="address-dropdown">
@@ -99,8 +97,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Scripts
               </a>
               <div className="dropdown-menu" aria-labelledby="scripts-dropdown">
@@ -123,8 +120,7 @@ const App = () => (
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Cryptography
               </a>
               <div className="dropdown-menu" aria-labelledby="cryptography-dropdown">
@@ -136,14 +132,15 @@ const App = () => (
                 </Link>
               </div>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/more-tools">
+                More tools
+              </Link>
+            </li>
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a
-                className="nav-link"
-                href="https://github.com/improvein/bitcoin-forge"
-                title="GitHub repo"
-              >
+              <a className="nav-link" href="https://github.com/improvein/bitcoin-forge" title="GitHub repo">
                 <FontAwesomeIcon icon={['fab', 'github']} />
               </a>
             </li>
@@ -165,15 +162,15 @@ const App = () => (
           {/* Cryptography */}
           <Route path="/cryptography/hash" component={() => <HashScreen />} />
           <Route path="/cryptography/keys" component={() => <KeysScreen />} />
+          {/* More tools */}
+          <Route path="/more-tools" component={() => <MoreToolsScreen />} />
         </div>
       </main>
       <footer className="footer mt-auto py-3">
         <div className="container">
           <span className="text-muted float-right">{`v${projectPackage.version}`}</span>
           <span className="text-muted">
-            The Bitcoin Forge is developed with ❤️+💻 by
-            {' '}
-            <a href="https://www.improvein.com">Improve-in</a>
+            The Bitcoin Forge is developed with ❤️+💻 by <a href="https://www.improvein.com">Improve-in</a>
           </span>
         </div>
       </footer>
