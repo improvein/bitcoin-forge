@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -50,9 +51,8 @@ module.exports = {
           {
             loader: 'postcss-loader', // Run postcss actions
             options: {
-              plugins() {
-                // postcss plugins, can be exported to postcss.config.js
-                return [require('autoprefixer')];
+              postcssOptions: {
+                plugins: [['cssnano']],
               },
             },
           },
@@ -78,6 +78,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
+    fallback: {
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer/'),
+    },
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
@@ -87,6 +91,9 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
     }),
