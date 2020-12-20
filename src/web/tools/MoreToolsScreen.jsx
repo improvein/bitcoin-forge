@@ -26,7 +26,7 @@ class MoreToolsScreen extends Component {
                   <a href={author.url}>{author.name}</a>
                 ))}
               </h6>
-              <a href={tool.url} target="_blank">
+              <a href={tool.url} target="_blank" rel="nonoopener noreferrer">
                 {tool.url}
               </a>
               <p className="card-text">{tool.description}</p>
