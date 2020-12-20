@@ -8,7 +8,7 @@ The core features are developed using [BitcoinJS (bitcoinjs-lib)](https://github
 
 The Miniscript features are developed using code taken from http://bitcoin.sipa.be/miniscript/ (designed and implemented by Pieter Wuille, Andrew Poelstra, and Sanket Kanjalkar).
 
-The front-end is developed mainly using [React](https://reactjs.org), [Bootstrap](https://getbootstrap.com) and [other libraries](https://github.com/improvein/bitcoin-forge/blob/master/package.json)
+The front-end is developed mainly using [React](https://reactjs.org), [Bootstrap](https://getbootstrap.com) and [other libraries](https://github.com/improvein/bitcoin-forge/blob/master/package.json). It is built for web browsers using [webpack](https://webpack.js.org/).
 
 ## Features
 Some things that can be done with this toolkit:
@@ -50,11 +50,11 @@ npm install
 
 Finally, you can either build the project into the `dist` folder (using [webpack](https://webpack.js.org/))
 ```
-npm run buildweb
+npm run build
 ```
 or start a local server (using [webpack dev server](https://github.com/webpack/webpack-dev-server))
 ```
-npm run startweb
+npm run dev
 ```
 
 ## Contribute
