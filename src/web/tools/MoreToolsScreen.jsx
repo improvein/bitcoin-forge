@@ -14,7 +14,7 @@ class MoreToolsScreen extends Component {
         <p>Additional third-party tools that can be very useful (sorted alphabetically).</p>
 
         {tools.map((tool) => (
-          <div className="card mb-2">
+          <div className="card mb-2" key={tool.name}>
             <div className="card-body">
               <h5 className="card-title">
                 {tool.name}
@@ -23,7 +23,7 @@ class MoreToolsScreen extends Component {
               <h6 className="card-subtitle text-muted mb-3">
                 by{' '}
                 {tool.authors.map((author) => (
-                  <a href={author.url}>{author.name}</a>
+                  <a href={author.url} key={author.url}>{author.name}</a>
                 ))}
               </h6>
               <a href={tool.url} target="_blank" rel="nonoopener noreferrer">
