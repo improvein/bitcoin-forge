@@ -182,7 +182,7 @@ const App = () => (
       </main>
       <footer className="footer mt-auto py-3">
         <div className="container">
-          <span className="text-muted float-right">{`v${projectPackage.version}`}</span>
+          <span className="text-muted float-end">{`v${projectPackage.version}`}</span>
           <span className="text-muted">
             The Bitcoin Forge is developed with ❤️+💻 by <a href="https://www.improvein.com">Improve-in</a>
           </span>
