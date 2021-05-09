@@ -160,7 +160,7 @@ class CreateScriptScreen extends Component {
               <div className="card-header">
                 <button
                   type="button"
-                  className="btn btn-link btn-sm float-right"
+                  className="btn btn-link btn-sm float-end"
                   title="Clear stack"
                   onClick={this.onStackClear}
                 >
@@ -180,7 +180,7 @@ class CreateScriptScreen extends Component {
                       onDragEnd={this.onItemDragEnd}
                     >
                       <span
-                        className={`badge badge-${
+                        className={`badge bg-${
                           item.isOpcode() ? 'secondary' : 'info'
                         } my-1 list-dnd-item`}
                       >
@@ -198,7 +198,7 @@ class CreateScriptScreen extends Component {
             <p className="text-danger">{errorMessage}</p>
           </div>
           <div className="col-12 col-sm-7">
-            <div className="form-group">
+            <div className="form-group mb-3">
               <label htmlFor="custom-value">Custom value</label>
               <div className="d-flex">
                 <button
@@ -233,7 +233,7 @@ class CreateScriptScreen extends Component {
                 <ul className="list-unstyled row">
                   {filteredOpCodes.map(item => (
                     <li key={item.name} className="col text-nowrap opcode-item">
-                      <span className="badge badge-secondary my-1">{item.name}</span>
+                      <span className="badge bg-secondary my-1">{item.name}</span>
                       <button
                         type="button"
                         className="btn btn-link"

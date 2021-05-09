@@ -42,9 +42,7 @@ class AddressInput extends Component {
 
     return (
       <div className={`input-group input-group-${size}`}>
-        <div className="input-group-prepend" title="Bitcoin Address">
-          <span className="input-group-text">Addr</span>
-        </div>
+        <span className="input-group-text" title="Bitcoin Address">Addr</span>
         <input
           type="text"
           className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}

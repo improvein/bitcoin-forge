@@ -75,7 +75,7 @@ class TxInputForm extends Component {
           <ButtonExpandable
             btnClass="danger"
             size="sm"
-            className="float-right"
+            className="float-end"
             text="Remove"
             align="right"
             icon="trash"

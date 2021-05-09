@@ -17,7 +17,7 @@ const AddressInputField = ({
   );
 
   return (
-    <div className={`form-group${horizontal ? ' row' : ''}`}>
+    <div className={`form-group${horizontal ? ' row' : ''} mb-3`}>
       <label htmlFor={id} className={`${horizontal ? 'col-sm-3 col-form-label' : ''}`}>
         {label}
       </label>

@@ -36,9 +36,7 @@ class HexInput extends Component {
 
     return (
       <div className={`input-group input-group-${size}`}>
-        <div className="input-group-prepend" title="Hexadecimal">
-          <span className="input-group-text">0x</span>
-        </div>
+        <span className="input-group-text" title="Hexadecimal">0x</span>
         <input
           type="text"
           className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}

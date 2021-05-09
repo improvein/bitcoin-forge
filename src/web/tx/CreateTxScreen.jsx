@@ -260,7 +260,7 @@ class CreateTxScreen extends Component {
           <div className="col-6" />
           <div className="col-sm">
             <h2>
-              <div className="float-right">
+              <div className="float-end">
                 <Button btnClass="primary" size="sm" onClick={this.onAddInput}>
                   <FontAwesomeIcon icon="plus-circle" className="mr-1" />
                   Add new input
@@ -277,7 +277,7 @@ class CreateTxScreen extends Component {
           </div>
           <div className="col-sm">
             <h2>
-              <div className="float-right">
+              <div className="float-end">
                 <div className="btn-group" role="group">
                   <Button btnClass="primary" size="sm" onClick={this.onAddOutput}>
                     <FontAwesomeIcon icon="plus-circle" className="mr-1" />

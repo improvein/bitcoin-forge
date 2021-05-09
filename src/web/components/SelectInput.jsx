@@ -21,7 +21,7 @@ class SelectInput extends Component {
 
     return (
       <select
-        className={`custom-select custom-select-${size}`}
+        className={`form-select form-select-${size}`}
         id={id}
         name={id}
         defaultValue={value}

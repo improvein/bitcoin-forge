@@ -43,9 +43,7 @@ class AmountInput extends Component {
           pattern="[0-9]*"
           onChange={this.onInputChange}
         />
-        <div className="input-group-append">
-          <span className="input-group-text">{unit}</span>
-        </div>
+        <span className="input-group-text">{unit}</span>
         {errorMessage !== '' && <div className="invalid-feedback">{errorMessage}</div>}
       </div>
     );

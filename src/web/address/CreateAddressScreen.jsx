@@ -22,98 +22,85 @@ class CreateAddressScreen extends Component {
         <p>Forge an address of the selected type.</p>
         <div className="row">
           <div className="col-3">
-            <div
-              className="nav flex-column nav-pills"
-              id="addr-types-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
+            <div className="nav flex-column nav-pills" id="addr-types-tab" role="tablist" aria-orientation="vertical">
               <a
                 className="nav-link active"
                 id="addr-p2pkh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-p2pkh"
                 role="tab"
                 aria-controls="addr-p2pkh"
-                aria-selected="true"
-              >
+                aria-selected="true">
                 P2PKH
               </a>
               <a
                 className="nav-link"
                 id="addr-p2wpkh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-p2wpkh"
                 role="tab"
                 aria-controls="addr-p2wpkh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 P2WPKH
               </a>
               <a
                 className="nav-link"
                 id="addr-p2sh-p2wpkh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-p2sh-p2wpkh"
                 role="tab"
                 aria-controls="addr-p2sh-p2wpkh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 P2PH-P2WPKH
               </a>
               <a
                 className="nav-link"
                 id="addr-multisig-p2sh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-multisig-p2sh"
                 role="tab"
                 aria-controls="addr-multisig-p2sh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 Multisig P2SH
               </a>
               <a
                 className="nav-link"
                 id="addr-multisig-p2wsh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-multisig-p2wsh"
                 role="tab"
                 aria-controls="addr-multisig-p2wsh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 Multisig P2WSH (SegWit)
               </a>
               <a
                 className="nav-link"
                 id="addr-multisig-p2sh-p2wsh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-multisig-p2sh-p2wsh"
                 role="tab"
                 aria-controls="addr-multisig-p2sh-p2wsh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 Multisig P2SH-P2WSH (SegWit)
               </a>
               <a
                 className="nav-link"
                 id="addr-p2sh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-p2sh"
                 role="tab"
                 aria-controls="addr-p2sh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 P2SH
               </a>
               <a
                 className="nav-link"
                 id="addr-p2wsh-tab"
-                data-toggle="pill"
+                data-bs-toggle="pill"
                 href="#addr-p2wsh"
                 role="tab"
                 aria-controls="addr-p2wsh"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 P2WSH
               </a>
             </div>

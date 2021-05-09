@@ -36,9 +36,7 @@ class B58Input extends Component {
 
     return (
       <div className={`input-group input-group-${size}`}>
-        <div className="input-group-prepend" title="Base58">
-          <span className="input-group-text">b58</span>
-        </div>
+        <span className="input-group-text" title="Base58">b58</span>
         <input
           type="text"
           className={`text-console form-control ${errorMessage !== '' ? 'is-invalid' : ''}`}

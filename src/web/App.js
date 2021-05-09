@@ -58,19 +58,22 @@ const App = () => (
                 href="#"
                 id="transactions-dropdown"
                 role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
+                data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Transactions
               </a>
-              <div className="dropdown-menu" aria-labelledby="transactions-dropdown">
-                <Link className="dropdown-item" to="/tx/decode">
-                  Decode a tx
-                </Link>
-                <Link className="dropdown-item" to="/tx/forge">
-                  Create a tx
-                </Link>
-              </div>
+              <ul className="dropdown-menu" aria-labelledby="transactions-dropdown">
+                <li>
+                  <Link className="dropdown-item" to="/tx/decode">
+                    Decode a tx
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/tx/forge">
+                    Create a tx
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -78,16 +81,17 @@ const App = () => (
                 href="#"
                 id="address-dropdown"
                 role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
+                data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Address
               </a>
-              <div className="dropdown-menu" aria-labelledby="address-dropdown">
-                <Link className="dropdown-item" to="/address/create">
-                  Create
-                </Link>
-              </div>
+              <ul className="dropdown-menu" aria-labelledby="address-dropdown">
+                <li>
+                  <Link className="dropdown-item" to="/address/create">
+                    Create
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -95,22 +99,28 @@ const App = () => (
                 href="#"
                 id="scripts-dropdown"
                 role="button"
-                data-toggle="dropdown"
+                data-bs-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">
                 Scripts
               </a>
-              <div className="dropdown-menu" aria-labelledby="scripts-dropdown">
-                <Link className="dropdown-item" to="/script/decompile-asm">
-                  Decompile ASM
-                </Link>
-                <Link className="dropdown-item" to="/script/create">
-                  Forge / Create
-                </Link>
-                <Link className="dropdown-item" to="/script/create-miniscript">
-                  Miniscript
-                </Link>
-              </div>
+              <ul className="dropdown-menu" aria-labelledby="scripts-dropdown">
+                <li>
+                  <Link className="dropdown-item" to="/script/decompile-asm">
+                    Decompile ASM
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/script/create">
+                    Forge / Create
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/script/create-miniscript">
+                    Miniscript
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -118,19 +128,23 @@ const App = () => (
                 href="#"
                 id="cryptography-dropdown"
                 role="button"
-                data-toggle="dropdown"
+                data-bs-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">
                 Cryptography
               </a>
-              <div className="dropdown-menu" aria-labelledby="cryptography-dropdown">
-                <Link className="dropdown-item" to="/cryptography/hash">
-                  Hash
-                </Link>
-                <Link className="dropdown-item" to="/cryptography/keys">
-                  Keys
-                </Link>
-              </div>
+              <ul className="dropdown-menu" aria-labelledby="cryptography-dropdown">
+                <li>
+                  <Link className="dropdown-item" to="/cryptography/hash">
+                    Hash
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/cryptography/keys">
+                    Keys
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/more-tools">
