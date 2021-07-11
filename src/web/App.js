@@ -4,6 +4,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
   faArrowRight,
+  faCaretDown,
+  faCaretRight,
   faCogs,
   faExclamationTriangle,
   faMinusCircle,
@@ -31,7 +33,7 @@ import './scss/main.scss';
 import projectPackage from '../../package.json';
 
 // icons to be used
-library.add(faArrowLeft, faArrowRight, faExclamationTriangle, faCogs, faGithub, faMinusCircle, faPlusCircle, faTrash);
+library.add(faArrowLeft, faArrowRight, faCaretDown, faCaretRight, faExclamationTriangle, faCogs, faGithub, faMinusCircle, faPlusCircle, faTrash);
 
 const App = () => (
   <Router basename="/">

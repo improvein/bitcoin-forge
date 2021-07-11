@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InputField from '../components/InputField';
 import { AmountInputField, HexInputField, B58InputField, ButtonExpandable, SelectInputField } from '../components';
 import { TxInput } from '../../model';
@@ -17,9 +18,11 @@ class TxInputForm extends Component {
       redeemScript: props.item.redeemScript,
       amount: parseInt(props.item.amount, 10),
       type: props.item.type,
+      collapsed: false,
     };
     this.onFieldChange = this.onFieldChange.bind(this);
     this.onRemoveClick = this.onRemoveClick.bind(this);
+    this.onExpandCollapse = this.onExpandCollapse.bind(this);
   }
 
   onFieldChange(event) {
@@ -62,8 +65,15 @@ class TxInputForm extends Component {
     }
   }
 
+  onExpandCollapse(event) {
+    event.preventDefault();
+    this.setState((prevState) => ({
+      collapsed: !prevState.collapsed,
+    }));
+  }
+
   render() {
-    const { index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type } = this.state;
+    const { index, prevTxHash, prevTxIndex, privateKey, redeemScript, amount, type, collapsed } = this.state;
 
     const availableInputTypes = Constants.AddressTypes.filter((addrType) =>
       [Constants.ADDRTYPE_P2PKH, Constants.ADDRTYPE_P2SH, Constants.ADDRTYPE_P2WPKH, Constants.ADDRTYPE_P2SH_P2WPKH].includes(addrType),
@@ -81,67 +91,72 @@ class TxInputForm extends Component {
             icon="trash"
             onClick={this.onRemoveClick}
           />
-          {`Input #${index}`}
+          <button type="button" className="btn btn-link" onClick={this.onExpandCollapse}>
+            <FontAwesomeIcon icon={collapsed ? 'caret-right' : 'caret-down'} className="fa-fw" />
+            {`Input #${index}`}
+          </button>
         </div>
-        <div className="card-body">
-          <div>
-            <h4 className="card-title">Previous UTXO</h4>
-            <HexInputField
-              label="TX Hash"
-              id={`prevTxHash_${index}`}
-              horizontal
-              size="sm"
-              value={prevTxHash}
-              handleChange={this.onFieldChange}
-            />
-            <InputField
-              label="Index"
-              type="number"
-              pattern="[0-9]*"
-              id={`prevTxIndex_${index}`}
-              horizontal
-              size="sm"
-              value={prevTxIndex}
-              handleChange={this.onFieldChange}
-            />
-            <SelectInputField
-              label="Type"
-              id={`type_${index}`}
-              size="sm"
-              horizontal
-              value={type}
-              choices={availableInputTypes.map((addrType) => ({
-                text: addrType,
-                value: addrType,
-              }))}
-              handleChange={this.onFieldChange}
-            />
-            <AmountInputField label="Amount" id={`amount_${index}`} horizontal size="sm" value={amount} handleChange={this.onFieldChange} />
-          </div>
-          <hr />
-          {type === Constants.ADDRTYPE_P2SH || type === Constants.ADDRTYPE_P2WSH  && (
-            <HexInputField
-              label="Redeem script"
-              id={`redeemScript_${index}`}
-              horizontal
-              size="sm"
-              value={redeemScript}
-              helpMessage="Script: [your solution] + [Lock script in Hexa]"
-              handleChange={this.onFieldChange}
-            />
-          )}
+        {!collapsed && 
+          <div className="card-body">
+            <div>
+              <h4 className="card-title">Previous UTXO</h4>
+              <HexInputField
+                label="TX Hash"
+                id={`prevTxHash_${index}`}
+                horizontal
+                size="sm"
+                value={prevTxHash}
+                handleChange={this.onFieldChange}
+              />
+              <InputField
+                label="Index"
+                type="number"
+                pattern="[0-9]*"
+                id={`prevTxIndex_${index}`}
+                horizontal
+                size="sm"
+                value={prevTxIndex}
+                handleChange={this.onFieldChange}
+              />
+              <SelectInputField
+                label="Type"
+                id={`type_${index}`}
+                size="sm"
+                horizontal
+                value={type}
+                choices={availableInputTypes.map((addrType) => ({
+                  text: addrType,
+                  value: addrType,
+                }))}
+                handleChange={this.onFieldChange}
+              />
+              <AmountInputField label="Amount" id={`amount_${index}`} horizontal size="sm" value={amount} handleChange={this.onFieldChange} />
+            </div>
+            <hr />
+            {type === Constants.ADDRTYPE_P2SH || type === Constants.ADDRTYPE_P2WSH  && (
+              <HexInputField
+                label="Redeem script"
+                id={`redeemScript_${index}`}
+                horizontal
+                size="sm"
+                value={redeemScript}
+                helpMessage="Script: [your solution] + [Lock script in Hexa]"
+                handleChange={this.onFieldChange}
+              />
+            )}
 
-          {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH || type === Constants.ADDRTYPE_P2SH_P2WPKH) && (
-            <B58InputField
-              label="Private key"
-              id={`privateKey_${index}`}
-              horizontal
-              size="sm"
-              value={privateKey}
-              handleChange={this.onFieldChange}
-            />
-          )}
-        </div>
+            {(type === Constants.ADDRTYPE_P2PKH || type === Constants.ADDRTYPE_P2WPKH || type === Constants.ADDRTYPE_P2SH_P2WPKH) && (
+              <B58InputField
+                label="Private key"
+                id={`privateKey_${index}`}
+                horizontal
+                size="sm"
+                value={privateKey}
+                handleChange={this.onFieldChange}
+              />
+            )}
+          </div>
+        }
       </div>
     );
   }
