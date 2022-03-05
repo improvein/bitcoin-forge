@@ -84,11 +84,16 @@ module.exports = {
     },
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    publicPath: '/bitcoin-forge/',
-    openPage: 'bitcoin-forge/',
-    writeToDisk: true,
     historyApiFallback: true,
+    open: ['bitcoin-forge/'],
+    static: path.resolve(__dirname, 'dist'),
+    devMiddleware: {
+      publicPath: '/bitcoin-forge/',
+      writeToDisk: true,
+      // index: true,
+      // mimeTypes: { phtml: 'text/html' },
+      // serverSideRender: true,
+    },
   },
   plugins: [
     new webpack.ProvidePlugin({
